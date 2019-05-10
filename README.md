@@ -1,8 +1,4 @@
-# utopia
 
-> wutuobang
-
-## Build Setup
 
 ``` bash
 # install dependencies
@@ -26,5 +22,5 @@ npm run e2e
 # run all tests
 npm test
 ```
+乌托邦前台页面
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
