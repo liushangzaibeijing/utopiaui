@@ -21,7 +21,7 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="onSubmit('formInline')">查询</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import {requestUserQuery} from '@/api/user'
 
 export default {
   name: 'FuncTable',
@@ -124,6 +125,23 @@ export default {
     }
   },
   methods: {
+    onSubmit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          requestUserQuery(this.formInline).then(res => {
+            this.$message({
+              message: '查询成功！',
+              type: 'success'
+            })
+            this.pageTotal = res.data.length
+            this.tableData = res.data
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
     handleEdit (index, row) {
       this.form.index = index + (this.currentPage - 1) * this.pageSize
       this.form.name = row.name

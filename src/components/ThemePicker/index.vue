@@ -68,9 +68,8 @@ export default {
         if (typeof innerText !== 'string') return
         style.innerText = this.updateStyle(innerText, originalCluster, themeCluster)
       })
-      let utopiaMenu =  document.getElementById("utopia-menu");
-      //添加主题设置 菜单栏
-      utopiaMenu.setAttribute("background-color",val);
+      //设置菜单的换肤
+      this.updateTemp(val);
       localStorage.setItem('user-theme', val)
     }
   },
@@ -128,8 +127,37 @@ export default {
       }
       clusters.push(shadeColor(theme, 0.1))
       return clusters
+    },
+    updateTemp(newStyle){
+      let menu = $("#utopia-menu");
+      menu.css("background-color",newStyle);
+
+      let liNodes = $("#utopia-menu li");
+      $.each(liNodes,function(index,item){
+        let style = item.style;
+        style.backgroundColor=newStyle;
+      });
+
+      console.log(menu)
+
+      // let utopiaMenu =  document.getElementById("utopia-menu");
+      //
+      // utopiaMenu.getC
+      // let style = utopiaMenu.getAttributeNode("style")
+      //
+      //
+      // let nodeName = style.nodeName;
+      // let nodeValue = style.nodeValue;
+      // console.log(nodeName);
+      // console.log(nodeValue);
+      //
+      // style.nodeValue = "background-color: rgb(255, 255, 255);";
+      //
+      // utopiaMenu.setAttribute("background-color","#fff");
     }
+
   },
+
   mounted () {
     const lastTheme = localStorage.getItem('user-theme') || ORIGINAL_THEME
     this.theme = lastTheme

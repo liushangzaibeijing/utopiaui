@@ -17,13 +17,24 @@
         ></el-autocomplete>
       </div>
       <div class="el-col-10 el-col">
-        <el-menu :default-active="activeIndex2" class="el-menu-demo theme-bg-blue"
-                 mode="horizontal"  @select="handleSelect"  background-color="#409eff"
+        <el-menu :default-active="activeIndex"  class="el-menu-demo "
+                 mode="horizontal"  @select="handleSelect"
                  id="utopia-menu"
-                 text-color="#fff" active-text-color="#ffd04b">
-          <el-menu-item index="1">电影</el-menu-item>
-          <el-menu-item index="2" >读书</el-menu-item>
-          <el-menu-item index="3">音乐</el-menu-item>
+                 text-color="#fff"
+                 active-text-color="#ffd04b">
+<!--          <el-menu-item index="1">电影</el-menu-item>-->
+<!--          <el-menu-item index="2" >读书</el-menu-item>-->
+<!--          <el-menu-item index="3">音乐</el-menu-item>-->
+          <template v-for="(level1, index1) in $router.options.routes" v-if="level1.menu">
+          <el-menu-item
+                        :index="level1.children[0].path" :key="index1">
+            <i :class="level1.children[0].icon">
+            </i>
+            <span slot="title">
+            {{$t(level1.children[0].name)}}
+            </span>
+          </el-menu-item>
+          </template>
         </el-menu>
       </div>
     </div>
@@ -210,29 +221,26 @@ export default {
         return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },
-    handleSelect(item) {
-      console.log(item);
+    handleSelect(index) {
+      console.log(index);
+      this.$router.push(index)
     },
-    updateTemp(){
+
+    showRouters() {
       debugger
-      let utopiaMenu =  document.getElementById("utopia-menu");
-      let style = utopiaMenu.getAttributeNode("style")
+      let routes = this.$router.options.routes[0].children;
 
-      let nodeName = style.nodeName;
-      let nodeValue = style.nodeValue;
-      console.log(nodeName);
-      console.log(nodeValue);
-
-      style.nodeValue = "background-color:#ffff";
-
-      utopiaMenu.setAttribute("background-color","#fff");
-    }
-
-
+      routes.forEach(function(item,index){
+        console.log(item.path);
+        console.log(item.name);
+        console.log(item.icon);
+      });
+      console.log(routes);
+    },
   },
   mounted() {
     this.restaurants = this.loadAll();
-    this.updateTemp();
+    this.showRouters();
   }
 }
 </script>

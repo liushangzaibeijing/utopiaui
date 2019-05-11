@@ -1,4 +1,4 @@
-<template>
+R<template>
   <el-row class="page">
     <el-col :span="24">
       <!-- 页面的头部分 -->
