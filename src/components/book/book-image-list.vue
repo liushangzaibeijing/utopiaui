@@ -30,11 +30,11 @@
 </template>
 
 <script>
-  import VmCard from '@/components/vm-card'
+  import MovieCard from '@/components/movie/movie-card'
   export default {
     name: 'VmImageList',
     components: {
-      VmCard
+      MovieCard
     },
     props: {
       title: {

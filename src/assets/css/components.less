@@ -12,7 +12,7 @@
   border-radius: @btn-border-radius;
   .panel-heading{
     text-align: left;
-    width: 100%;
+    width: 50%;
     border-radius: 4px 4px 0 0;
     border-bottom: @border-split;
     padding:@vm-spacing-base;
@@ -411,12 +411,19 @@
   }
 }
 
+.centerMeBox{
+   width:70%;
+   margin:0 auto
+}
+.vm
+
 .vm-card-vertical{
   .card-img{
     position: relative;
     img{
       display: block;
-      width: 100%
+      width: 300px;
+      height: 350px;
     }
     .control{
       position: absolute;
@@ -459,6 +466,16 @@
   }
 }
 
+#movieImg{
+  display: block;
+  margin: 0;
+  width: 300px;
+  height: 350px;
+}
+.searchButton{
+  color:#fff;
+}
+
 .vm-card-horizantal{
   overflow: hidden;
   position: relative;
@@ -471,8 +488,11 @@
     img{
       display: block;
       margin: 0;
-      width: 100%;
+      width: 300px;
+      height: 350px;
     }
+
+
   }
   .card-desc{
     width: 50%;
@@ -542,7 +562,7 @@
     font-weight: bold;
     font-size: 14px;
     border-radius: 0 @btn-border-radius @btn-border-radius 0;
-    background: url("../assets/img/login-bg.jpg");
+    background: url("../img/login-bg.jpg");
     .photo-author{
       position: absolute;
       right: 6px;

@@ -2,16 +2,16 @@
   <div :class="[type === 'horizantal' ? 'vm-card-horizantal' : 'vm-card-vertical' , 'vm-panel']">
     <div class="card-img">
       <img :src="img" alt="">
-      <div v-if="editable && type == 'vertical'" class="control">
-        <span class="edit">
-          <a :href="editUrl">
-            <i class="fa fa-pencil"></i>
-          </a>
-        </span>
-        <span class="delete">
-          <i class="fa fa-trash" @click="modalDelete=true"></i>
-        </span>
-      </div>
+<!--      <div v-if="editable && type == 'vertical'" class="control">-->
+<!--        <span class="edit">-->
+<!--          <a :href="editUrl">-->
+<!--            <i class="fa fa-pencil"></i>-->
+<!--          </a>     -->
+<!--        </span>-->
+<!--        <span class="delete">-->
+<!--          <i class="fa fa-trash" @click="modalDelete=true"></i>-->
+<!--        </span>-->
+<!--      </div>-->
     </div>
     <div class="card-desc panel-body">
       <h2>{{ title }}</h2>

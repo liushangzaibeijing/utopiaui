@@ -1,5 +1,5 @@
 <template>
-  <VmImageList :data="dataImageList" @delete-ok="deletefn" class="vm-margin"></VmImageList>
+  <MovieImageList :data="dataImageList" @delete-ok="deletefn" class="vm-margin"></MovieImageList>
 </template>
 
 <script>

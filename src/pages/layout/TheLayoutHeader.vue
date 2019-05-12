@@ -227,7 +227,6 @@ export default {
     },
 
     showRouters() {
-      debugger
       let routes = this.$router.options.routes[0].children;
 
       routes.forEach(function(item,index){

@@ -1,5 +1,5 @@
 <template>
-  <div class="vm-image-list">
+  <div class="vm-image-list centerMeBox">
     <Row class="image-list-heading vm-panel">
       <!-- 文件标题 -->
       <div class="panel-heading">
@@ -9,7 +9,7 @@
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
        <div class="search-bar">
           <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
-          <Button type="ghost" @click="search"><i class="fa fa-search"></i></Button>
+          <Button type="ghost" class="searchButton" @click="search"><i class="fa fa-search"></i></Button>
         </div>
         <Row type="flex" align="middle" class="page">
           <span>Show</span>
@@ -23,18 +23,18 @@
     <Row class="image-list" :gutter="16">
       <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
         <!-- 每一个图片的显示列表组建是 VmCard组件 传递的参数  editable是否可编辑  图片标题  图片描述 图片地址 编辑地址  删除-->
-        <VmCard :editable="false" :title="item.title" :img="item.img" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></VmCard>
+        <MovieCard :editable="false" :title="item.title" :img="item.img" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></MovieCard>
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-  import VmCard from '@/components/vm-card'
+  import MovieCard from '@/components/movie/movie-card'
   export default {
-    name: 'VmImageList',
+    name: 'MovieImageList',
     components: {
-      VmCard
+      MovieCard
     },
     props: {
       title: {

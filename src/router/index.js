@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import TheLayout from '@/pages/layout/TheLayout'
-import FuncTable from '@/pages/functions/table/FuncTable'
 import ImageList from '@/pages/functions/book/ImageList'
+import movieImgList from '@/pages/functions/moive/ImageList'
 
 Vue.use(Router)
 
@@ -30,7 +30,7 @@ export default new Router({
           path: '/movie',
           name: 'menu.movie',
           icon: 'el-icon-film',
-          component: FuncTable
+          component: movieImgList
         }
       ]
     },
@@ -43,13 +43,13 @@ export default new Router({
           path: '/music',
           name: 'menu.music',
           icon: 'el-icon-headset',
-          component: FuncTable
+          component: movieImgList
         }
       ]
     },
     {
       path: '/ImageList',
-      component: ImageList,
+      component: movieImgList,
     },
   ]
 })
