@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import TheLayout from '@/pages/layout/TheLayout'
 import ImageList from '@/pages/functions/book/ImageList'
 import movieImgList from '@/pages/functions/moive/ImageList'
+import movieDetail from '@/pages/functions/moive/movieDetail'
+
 
 Vue.use(Router)
 
@@ -48,8 +50,15 @@ export default new Router({
       ]
     },
     {
-      path: '/ImageList',
-      component: movieImgList,
+      path: '/movieDetail',
+      component: TheLayout,
+      children: [
+        {
+          path: '/movieDetail',
+          component: movieDetail
+        }
+      ]
     },
+
   ]
 })
