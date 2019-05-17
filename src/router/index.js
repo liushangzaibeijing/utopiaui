@@ -4,7 +4,8 @@ import TheLayout from '@/pages/layout/TheLayout'
 import ImageList from '@/pages/functions/book/ImageList'
 import movieImgList from '@/pages/functions/moive/ImageList'
 import movieDetail from '@/pages/functions/moive/movieDetail'
-
+import MovieTag from '@/pages/functions/moive/MovieTag.vue'
+import MovieTagContent from '@/pages/functions/moive/MovieTagContent'
 
 Vue.use(Router)
 
@@ -32,7 +33,11 @@ export default new Router({
           path: '/movie',
           name: 'menu.movie',
           icon: 'el-icon-film',
-          component: movieImgList
+          //component: movieImgList
+          components: {
+            aside: MovieTag,
+            content: MovieTagContent
+          }
         }
       ]
     },
