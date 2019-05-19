@@ -106,7 +106,7 @@
       showMovieDetail(){
 
         this.$router.push({
-          path: '/movieDetail',
+          path: '/movieInfo',
         })
       },
     }

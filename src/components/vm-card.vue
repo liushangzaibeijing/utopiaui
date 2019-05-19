@@ -48,7 +48,7 @@
       },
       img: {
         type: String,
-        default: require('@/assets/img/img-1.jpg')
+        default: require('@/assets/img/img-1')
       },
       desc: {
         type: String,

@@ -1,10 +1,8 @@
 <template>
   <div class="vm-image-list centerMeBox">
+    <el-row>
+      <el-col span="21">
     <Row class="image-list-heading vm-panel">
-      <!-- 文件标题 -->
-      <div class="panel-heading">
-        {{ title }}
-      </div>
       <!-- 搜索框  -->
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
        <div class="search-bar">
@@ -20,21 +18,31 @@
         </Row>
       </Row>
     </Row>
-    <Row class="image-list" :gutter="16">
-      <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
-        <!-- 每一个图片的显示列表组建是 VmCard组件 传递的参数  editable是否可编辑  图片标题  图片描述 图片地址 编辑地址  删除-->
-        <MovieCard :editable="false" :title="item.title" :img="item.img" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></MovieCard>
-      </Col>
+    <Row>
+      <Row class="image-list" :gutter="16">
+        <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
+          <!-- 每一个图片的显示列表组建是 VmCard组件 传递的参数  editable是否可编辑  图片标题  图片描述 图片地址 编辑地址  删除-->
+          <MovieCard :editable="false" :title="item.title" :img="item.img" :desc="item.desc" :detailUrl="item.detailUrl" :editUrl="item.editUrl" @delete-ok=" deleteOk(item) "></MovieCard>
+        </Col>
+      </Row>
     </Row>
+      </el-col>
+      <el-col span="3">
+          <MovieTag></MovieTag>
+      </el-col>
+    </el-row>
   </div>
+
 </template>
 
 <script>
   import MovieCard from '@/components/movie/movie-card'
+  import MovieTag from '@/components/movie/movie-tag'
   export default {
     name: 'MovieImageList',
     components: {
-      MovieCard
+       MovieCard,
+       MovieTag
     },
     props: {
       title: {

@@ -10,6 +10,7 @@ import 'font-awesome/scss/font-awesome.scss'
 import VueScroll from 'vuescroll'
 import 'vuescroll/dist/vuescroll.css'
 import './assets/css/common.scss'
+import './assets/css/style.css'
 import VueI18n from 'vue-i18n'
 import myEnLocale from './assets/lang/en'
 import myZhLocale from './assets/lang/zh-cn'
@@ -17,7 +18,8 @@ import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 import Mock from './mock/index'
 import iView from 'iview'
-
+import VueLazyLoad from 'vue-lazyload'; // 图片懒加载
+import store from "./store"
 
 
 
@@ -30,6 +32,10 @@ Mock.mockData()
 Vue.use(VueI18n)
 
 Vue.use(iView)
+
+Vue.use(VueLazyLoad, {
+  loading: require('./common/image/loading.gif')
+});
 const messages = {
   en: Object.assign(myEnLocale, enLocale),
   'zh-cn': Object.assign(myZhLocale, zhLocale)
@@ -50,6 +56,7 @@ Vue.use(VueScroll, {ops: {bar: {background: '#C0C4CC'}}})
 new Vue({
   el: '#app',
   router,
+  store,
   i18n,
   components: {App},
   template: '<App/>'
