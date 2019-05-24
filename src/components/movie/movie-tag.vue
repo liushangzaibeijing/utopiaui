@@ -21,10 +21,11 @@ export default {
   computed: {
     movieTags () {
       //return this.$store.state.movie.movieTags
-      ["热门", "最新", "经典", "华语", "欧美", "韩国", "日本", "动作", "喜剧", "爱情", "科幻", "悬疑", "恐怖", "动画", "可播放", "豆瓣高分", "冷门佳片"]''
+      return ["热门", "最新", "经典", "华语", "欧美", "韩国", "日本", "动作", "喜剧", "爱情", "科幻", "悬疑", "恐怖", "动画", "可播放", "豆瓣高分", "冷门佳片"]
     },
     currentMovieTag () {
-      return this.$store.state.movie.currentMovieTag
+      // return this.$store.state.movie.currentMovieTag
+      return "经典"
     },
     tagMovies () {
       return this.$store.state.movie.tagMovies

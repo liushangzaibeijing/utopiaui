@@ -17,7 +17,7 @@
                 <el-rate v-model="rateIcon" :colors="colors"></el-rate>
               </el-col>
               <el-col :span="10">
-                <span>{{rate}} 8.0 </span>&nbsp;&nbsp;<span>({{number}}1235人评价)</span>
+                <span>{{movie.rate}} 8.0 </span>&nbsp;&nbsp;<span>({{movie.number}}1235人评价)</span>
               </el-col>
             </el-row>
             <br />
@@ -57,12 +57,12 @@
               </el-col>
             </el-row>
           </div>
-         <img slot="reference"  id="movieImg" :src="img" alt=""  @click="showMovieDetail()" />
+         <img slot="reference"  id="movieImg" :src="getImages(movie.picture)" alt=""  @click="showMovieDetail()" />
       </el-popover>
 
     </div>
     <div class="card-desc panel-body">
-      <h2>{{ title }}&nbsp;{{title}}</h2>
+      <h2>{{ movie.shortName }}&nbsp;{{movie.score}}</h2>
     </div>
   </div>
 </template>
@@ -75,22 +75,10 @@
         type: String,
         default: 'vertical'
       },
-      title: {
-        type: String,
-        default: 'Title'
+      movie: {
+        type: Object,
       },
-      img: {
-        type: String,
-        default: require('@/assets/img/img-1.jpg')
-      },
-      detailUrl: {
-        type: String,
-        default: '#'
-      },
-      rateIcon:{
-        type:String,
-        default: '#F7BA2A'
-      }
+
     },
     data: function () {
       return {
@@ -106,9 +94,17 @@
       showMovieDetail(){
 
         this.$router.push({
-          path: '/movieDetail',
+          path: '/movieInfo',
         })
       },
+      // 解决403图片缓存问题
+      getImages( _url ){
+        if( _url !== undefined ){
+          let _u = _url.substring( 7 );
+          return 'https://images.weserv.nl/?url=' + _u;
+        }
+      }
+
     }
   }
 </script>
