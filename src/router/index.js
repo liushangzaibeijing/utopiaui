@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import TheLayout from '@/pages/layout/TheLayout'
 import ImageList from '@/pages/functions/book/ImageList'
-import movieImgList from '@/pages/functions/moive/ImageList'
-import movieDetail from '@/pages/functions/moive/movieDetail'
+import movieImgList from '@/pages/functions/moive/movieList'
 import movieInfo from '@/components/movie/movie-info'
+
 Vue.use(Router)
 
 export default new Router({
@@ -18,7 +18,7 @@ export default new Router({
           path: '/book',
           name: 'menu.book',
           icon: 'el-icon-reading',
-          component: ImageList
+          component: movieImgList
         }
       ]
     },

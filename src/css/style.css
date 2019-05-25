@@ -86,19 +86,5 @@ a {
   width:55px;
   height:11px;
   margin:0 3px 0 0;
-  background: url("../img/scoring.png");
-
-}
-
-.card-desc p.p-style  {
-  margin: 16px 0 0;
-  height: 20px;
-  overflow: hidden;
-  color: #37a;
-  /* text-align: center; */
-  font-size: 15px;
-}
-
-.card-desc p strong{
-  color: #e09015;
+  background: url("../assets/scoring.png");
 }

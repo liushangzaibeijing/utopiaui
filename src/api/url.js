@@ -1,3 +1,6 @@
-import base from "/utopia"
+const base = '/utopia';
 
-export movieList => "",
+export default {
+  //获取电影简写信息列表
+  getMovieList:base + '/movie/movieListPage'
+}
