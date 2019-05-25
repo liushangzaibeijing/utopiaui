@@ -22,7 +22,7 @@
       <Row class="image-list" :gutter="16">
         <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
           <!-- 每一个图片的显示列表组建是 VmCard组件 传递的参数  editable是否可编辑  图片标题  图片描述 图片地址 编辑地址  删除-->
-          <MovieCard :editable="false" :movie="item"></MovieCard>
+          <MovieCard :editable="false" :movie="item" ></MovieCard>
         </Col>
       </Row>
     </Row>
@@ -92,7 +92,7 @@
       },
       selectMovieList:function () {
         console.log("当前页码："+this.currentPage-1)
-        getMovieList({pageNum:this.currentPage-1,pageSize:this.showNum}).then(res => {
+        getMovieList({"pageNum":this.currentPage,"pageSize":this.showNum}).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
           this.parseData(data)

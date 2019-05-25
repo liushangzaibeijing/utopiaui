@@ -1,7 +1,7 @@
 <template>
   <el-header class="header theme-bg-blue">
     <router-link to="/">
-      <div class="logo el-col-10" :class="{'logo-hide': !openNav && !minScreen}">
+      <div class="logo el-col-10" >
         <img src="../../assets/logo3.jpg" class="image" />
         <span class="text">乌托邦</span>
       </div>
@@ -270,9 +270,9 @@ export default {
   }
   .logo-hide {
     width: 65px;
-    .text {
-      display: none;
-    }
+    /*.text {*/
+    /*  display: none;*/
+    /*}*/
   }
   .content {
     padding: 0 20px;

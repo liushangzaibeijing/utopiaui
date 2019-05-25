@@ -6,54 +6,55 @@
       <el-popover
         placement="right"
         width="300"
+        open-delay=200
         trigger="hover">
           <div>
             <el-row>
-              <el-col :span="24"><a href=""><span  style=" font-size: 25px; color: #666699">与空姐同居的日子 &nbsp;&nbsp; 2019</span> </a></el-col>
+              <el-col :span="24">
+                 <a href="">
+                   <span  style=" font-size: 25px; color: #666699">{{movie.name}} &nbsp;&nbsp;({{getReleaseYear(movie.releaseTime)}})</span>
+                 </a>
+              </el-col>
             </el-row>
             <br />
             <el-row :gutter="5">
-              <el-col :span="14">
-<!--                <el-rate v-model="#99A9BF" :colors="colors"></el-rate>-->
+              <el-col :span="11">
+                <el-rate
+                  v-model="score"
+                  disabled
+                  text-color="#ff9900">
+                </el-rate>
+
               </el-col>
-              <el-col :span="10">
-                <span>{{movie.rate}} 8.0 </span>&nbsp;&nbsp;<span>({{movie.number}}1235人评价)</span>
+              <el-col :span="13">
+                <span>   <span style="color: #e09015; font-size: 13px;">{{score*2}}</span>&nbsp;&nbsp;&nbsp;&nbsp;({{movie.evaluateNumber}}评价)</span>
               </el-col>
             </el-row>
             <br />
-            <el-row :gutter="2" >
-              <el-col :span="8">
-                <el-tag class="info" > 90分钟 </el-tag>
-              </el-col>
-              <el-col :span="8">
-                <el-tag class="info" > 中国内陆 </el-tag>
-              </el-col>
-              <el-col :span="8">
-                <!-- 需要遍历标签-->
-                <el-tag class="info" > 喜剧 </el-tag>
+            <el-row :gutter="2"  >
+              <el-tag class="info" style="margin: 10px;" v-for="(item,index) in movieTypes"  :key="index"> {{item}} </el-tag>
+<!--                <el-tag class="info"  > {{item}} </el-tag>-->
+<!--                <el-tag class="info"  > {{movie.filmmakingArea}}  </el-tag>-->
+<!--                &lt;!&ndash; 需要遍历标签&ndash;&gt;-->
+<!--                <el-tag class="info" > {{movie.tag}} </el-tag>-->
+            </el-row>
+            <br />
+            <el-row >
+              <el-col :span="24">
+
+                <span><el-tag type="success" > 导演：</el-tag>&nbsp;&nbsp;&nbsp;{{movie.director}} </span>
               </el-col>
             </el-row>
             <br />
             <el-row >
               <el-col :span="24">
-                <span> 导演&nbsp;&nbsp;&nbsp;xieqx </span>
+                <span> <el-tag type="success" > 主演：</el-tag>&nbsp;&nbsp;&nbsp;{{movie.leadActor}} </span>
               </el-col>
             </el-row>
             <br />
             <el-row >
               <el-col :span="24">
-                <span> 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi </span>
-              </el-col>
-            </el-row>
-            <br />
-            <el-row >
-              <el-col :span="24">
-                <span> 剧情：&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi  主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi
-                 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi
-                   主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi
-                   主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi
-                   主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi
-                 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi 主演&nbsp;&nbsp;&nbsp;xieqx/zhangsan/lisi</span>
+                <span> <el-tag type="success" > 剧情： </el-tag> &nbsp;&nbsp;{{movie.synopsis}}</span>
               </el-col>
             </el-row>
           </div>
@@ -62,7 +63,7 @@
 
     </div>
     <div class="card-desc panel-body ">
-      <p class="p-style">{{ movie.shortName }}&nbsp;<strong>{{movie.score}}</strong></p>
+      <p class="p-style">{{ movie.shortName }}&nbsp;&nbsp;&nbsp;<strong>{{movie.score}}</strong></p>
     </div>
   </div>
 </template>
@@ -79,8 +80,8 @@
     data: function () {
       return {
         modalDetail: false,
-        gridData:[],
-        colors: ['#99A9BF', '#F7BA2A', '#FF9900']
+        movieTypes:[],
+        score:5.0,
       }
     },
     methods: {
@@ -88,7 +89,6 @@
         this.$emit('delete-ok')
       },
       showMovieDetail(){
-
         this.$router.push({
           path: '/movieInfo',
         })
@@ -99,8 +99,31 @@
           let _u = _url.substring( 7 );
           return 'https://images.weserv.nl/?url=' + _u;
         }
-      }
+      },
+      //获取上映时间
+      getReleaseYear(releaseTime){
+        let releaseYear = releaseTime.substring(0,4);
+        console.log("上映日期：+"+releaseYear);
+        return releaseYear;
+      },
+    },
 
+    mounted(){
+      this.score = this.movie.score/2;
+      let movieLengths = this.movie.movieLength.split("/");
+      movieLengths.forEach(item => {
+        this.movieTypes.push(item)
+      });
+      let filmmakingAreas = this.movie.filmmakingArea.split("/");
+      filmmakingAreas.forEach(item => {
+        this.movieTypes.push(item)
+      });
+      let tags = this.movie.tag.split("/");
+      tags.forEach(item => {
+        this.movieTypes.push(item)
+      });
+
+      console.log("总记录 "+this.movieTypes);
     }
   }
 </script>

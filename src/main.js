@@ -16,7 +16,6 @@ import myEnLocale from './assets/lang/en'
 import myZhLocale from './assets/lang/zh-cn'
 import enLocale from 'element-ui/lib/locale/lang/en'
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
-import Mock from './mock/index'
 import iView from 'iview'
 import VueLazyLoad from 'vue-lazyload'; // 图片懒加载
 import store from "./store"
@@ -24,8 +23,6 @@ import store from "./store"
 
 
 Vue.config.productionTip = false
-/* mockjs */
-Mock.mockData()
 
 
 /* vue-i18n */
