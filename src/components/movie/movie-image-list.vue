@@ -1,13 +1,13 @@
 <template>
   <div class="vm-image-list centerMeBox">
     <el-row>
-      <el-col span="21">
+      <el-col :span="21">
     <Row class="image-list-heading vm-panel">
       <!-- 搜索框  -->
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
        <div class="search-bar">
           <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
-          <Button type="ghost" class="searchButton" @click="search"><i class="fa fa-search"></i></Button>
+          <Button type="success" round class="searchButton" @click="search"><i class="fa fa-search"></i></Button>
         </div>
         <Row type="flex" align="middle" class="page">
           <span>Show</span>
@@ -27,7 +27,7 @@
       </Row>
     </Row>
       </el-col>
-      <el-col span="3">
+      <el-col :span="3">
           <MovieTag></MovieTag>
       </el-col>
     </el-row>

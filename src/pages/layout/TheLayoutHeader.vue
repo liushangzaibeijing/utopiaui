@@ -1,6 +1,6 @@
 <template>
   <el-header class="header theme-bg-blue">
-    <router-link to="/index">
+    <router-link to="/">
       <div class="logo el-col-10" :class="{'logo-hide': !openNav && !minScreen}">
         <img src="../../assets/logo3.jpg" class="image" />
         <span class="text">乌托邦</span>
@@ -17,14 +17,12 @@
         ></el-autocomplete>
       </div>
       <div class="el-col-10 el-col">
-        <el-menu :default-active="activeIndex"  class="el-menu-demo "
+        <el-menu  class="el-menu-demo "
                  mode="horizontal"  @select="handleSelect"
                  id="utopia-menu"
                  text-color="#fff"
                  active-text-color="#ffd04b">
-<!--          <el-menu-item index="1">电影</el-menu-item>-->
-<!--          <el-menu-item index="2" >读书</el-menu-item>-->
-<!--          <el-menu-item index="3">音乐</el-menu-item>-->
+
           <template v-for="(level1, index1) in $router.options.routes" v-if="level1.menu">
           <el-menu-item
                         :index="level1.children[0].path" :key="index1">
@@ -119,6 +117,7 @@
 </template>
 
 <script>
+//引入更换主题
 import ThemePicker from '@/components/ThemePicker'
 
 export default {
@@ -129,12 +128,17 @@ export default {
     ThemePicker
   },
   data () {
-    let min_screen = window.innerWidth < 768
+    const min_screen = window.innerWidth < 768
+    // const user_info = JSON.parse(sessionStorage.getItem('user-info'))
+    // const user_name = user_info['name']
+    const lang = localStorage.getItem('user-language') || 'zh-cn'
     return {
       user_name: "xieqx",
       langDrop: false,
       lang: lang,
-      minScreen: min_screen
+      minScreen: min_screen,
+      state: '',
+      restaurants:[],
     }
   },
   methods: {
@@ -217,8 +221,8 @@ export default {
       }, 3000 * Math.random());
     },
     createStateFilter(queryString) {
-      return (state) => {
-        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
       };
     },
     handleSelect(index) {

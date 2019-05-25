@@ -1,7 +1,7 @@
 <template>
   <div class="movie-info centerMeBox">
     <el-row gutter="100">
-      <el-col span="15" >
+      <el-col :span="15" >
         <div class="overall">
           <img v-bind:src=movieDetail.img  width="200" height="250">
           <div class="desc">
@@ -50,7 +50,7 @@
           </div>
         </scroll>
        </el-col>
-      <el-col span="9">
+      <el-col :span="9">
         <MovieTag></MovieTag>
       </el-col>
     </el-row>
