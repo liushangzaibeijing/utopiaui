@@ -6,12 +6,12 @@
       <el-popover
         placement="right"
         width="300"
-        open-delay=200
+        open-delay="200"
         trigger="hover">
           <div>
             <el-row>
               <el-col :span="24">
-                 <a href="">
+                 <a onclick="showMovieDetail">
                    <span  style=" font-size: 25px; color: #666699">{{movie.name}} &nbsp;&nbsp;({{getReleaseYear(movie.releaseTime)}})</span>
                  </a>
               </el-col>
@@ -91,6 +91,7 @@
       showMovieDetail(){
         this.$router.push({
           path: '/movieInfo',
+          query:{id:this.movie.id},
         })
       },
       // 解决403图片缓存问题

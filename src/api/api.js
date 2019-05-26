@@ -7,3 +7,5 @@ axios.defaults.headers = {
 //获取电影列表
 export const getMovieList = params => axios.post(url.getMovieList, params).then(res => res.data);
 
+export const getMovie = params => axios.post(url.getMovie, params).then(res => res.data);
+

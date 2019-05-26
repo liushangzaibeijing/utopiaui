@@ -3,11 +3,11 @@
     <el-row gutter="100">
       <el-col :span="15" >
         <div class="overall">
-          <img v-bind:src=movieDetail.img  width="200" height="250">
+          <img v-bind:src=movieDetail.picture  width="200" height="250">
           <div class="desc">
-            <h2 class="title">{{movieDetail.title}}</h2>
+            <h2 class="title">{{movieDetail.shortName}}</h2>
             <span class="tag">{{tags}}</span>
-            <span class="original-title">原名: {{movieDetail.original_title}}</span>
+            <span class="original-title">原名: {{movieDetail.name}}</span>
             <span class="pubdate">上映时间: {{pubdate}}</span>
             <span class="duration">片长: {{durations}}</span>
           </div>
@@ -15,7 +15,7 @@
             <span class="origin">豆瓣评分</span>
             <span class="rating" v-if="rating">{{normalizeScore()}}</span>
             <star :size="24" :score="movieDetail.rating" :needNullStar="needNullStar"></star>
-            <span class="num" v-if="rating">{{movieDetail.ratings_count}}人评价</span>
+            <span class="num" v-if="rating">{{movieDetail.evaluateNumber}}人评价</span>
           </div>
         </div>
         <div class="operate">
@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="summary">
-          <h2 class="title">{{movieDetail.title}}的剧情简介</h2>
-          <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.summary}}</p>
+          <h2 class="title">{{movieDetail.shortName}}的剧情简介</h2>
+          <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.synopsis}}</p>
         </div>
         <scroll class="casts" :scrollX="this.scrollX" :eventPassthrough="this.eventPassthrough" ref="scroll">
           <div class="casts-content" ref="content">
@@ -61,8 +61,8 @@
   import Star from '@/base/star/star';
   import Scroll from '@/base/scroll/scroll';
   import MovieTag from '@/components/movie/movie-tag'
-  //import {saveWantedMovie} from "../../common/js/cache";
-  // import { mapGetters, mapActions } from 'vuex';
+  import { getMovie } from "../../api/api";
+
   export default {
     props: {
       movieDetail: {
@@ -96,17 +96,39 @@
         wanted: false,
         wantedText: '想看',
         hasWatched: false,
-        movie:{id:"2"}
+        movie:{id:"2"},
+        movieDetail: {
+          type: Object,
+          default: function(){
+            return {
+              id:"",
+              shortName:"",
+              name:"",
+              releaseTime:"",
+              img:"",
+              tag:"",
+              type:"",
+              score:null,
+              evaluateNumber:null,
+              movieLength:"",
+              director:[],
+              leadActor:[],
+              synopsis:''
+            }
+          }
+        }
       };
     },
     mounted() {
+      this.getMovie();
       //vue给我们提供了$nextTick方法，如果我们想对未来更新后的视图进行操作，
       // 我们只需要把要执行的函数传递给this.$nextTick方法
       this.$nextTick(() => {
         this._initPics();
         this.$refs.scroll.refresh();
       });
-      this.saveWantedMovie();
+
+
     },
     computed: {
       //计算比分
@@ -119,18 +141,17 @@
       },
       //获取电影标签
       tags() {
-        let year = this.movieDetail.year;
-        let tag = this.movieDetail.genres.join('/');
+        let year = this.movieDetail.releaseTime;
+        let tag = this.movieDetail.type+"/"+this.movieDetail.tag;
         return `${year}/${tag}`;
       },
       //获取片长
       durations() {
-        return this.movieDetail.duration;
+        return this.movieDetail.movieLength;
       },
       //计算发布日期
       pubdate() {
-        let pubdate = '';
-        let date = this.movieDetail.pubdates;
+        let date = this.movieDetail.releaseTime.substring(0,4);
         // for (let i = 0; i < date.length; i++) {
         //   if (date[i].indexOf('电影节') === -1) {
         //     pubdate = date[i]; // 没有在中国大陆上映，取不为电影节的最后一个信息
@@ -143,12 +164,13 @@
         // if (!pubdate) {
         //   pubdate = '暂无信息';
         // }
-        return pubdate;
+        return date;
       },
       //获取导演和演员的分组
       allCasts() {
         let removeIndex = [];
-        this.movieDetail.directors.forEach((item, index) => {
+        let directors = this.movieDetail.director.split("/")
+        directors.forEach((item, index) => {
           item.isDirector = true;
           //avatars 头像
           if (item.avatars === null) { // 有的导演不存在照片
@@ -170,6 +192,8 @@
         }
         return this.movieDetail.directors.concat(this.movieDetail.casts);
       },
+
+
     },
     methods: {
       //子组件 传递给父组件
@@ -237,11 +261,11 @@
         return false;
       },
       normalizeScore() { // 数位补零
-        let len = this.movieDetail.rating.toString().length;
+        let len = this.movieDetail.score.toString().length;
         if (len < 2) {
-          return `${this.movieDetail.rating}.0`;
+          return `${this.movieDetail.score}.0`;
         }
-        return this.movieDetail.rating;
+        return this.movieDetail.score;
       },
       _initPics() {
         let picWidth = 90;
@@ -249,6 +273,15 @@
         let width = (picWidth + margin) * this.allCasts.length - margin;
         //this.$refs.content.style.width = width + 'px';
       },
+      getMovie(){
+        debugger
+        console.log("id "+this.$route.query.id)
+        getMovie(Number.parseInt(this.$route.query.id)).then(res => {
+          // res msg code
+          let data = JSON.parse(res.data)
+          this.movieDetail = data;
+        });
+      }
     },
     components: {
       Star,

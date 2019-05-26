@@ -58,8 +58,8 @@
         currentPage: 1,
         total:20,
         movieQuery:{
-          pageNum:this.currentPage-1,
-          pageSize:this.showNum
+          pageNum:null,
+          pageSize:null
         }
       }
     },
@@ -91,8 +91,9 @@
         this.$emit('delete-ok', data)
       },
       selectMovieList:function () {
-        console.log("当前页码："+this.currentPage-1)
-        getMovieList({"pageNum":this.currentPage,"pageSize":this.showNum}).then(res => {
+        console.log("当前页码："+JSON.stringify(this.movieQuery))
+        console.log("当前页码："+JSON.stringify(this.movieQuery.pageNum))
+        getMovieList(JSON.stringify(this.movieQuery)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
           this.parseData(data)
