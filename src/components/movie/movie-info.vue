@@ -3,7 +3,7 @@
     <el-row gutter="100">
       <el-col :span="15" >
         <div class="overall">
-          <img v-bind:src=movieDetail.picture  width="200" height="250">
+          <img v-bind:src=getImages(movieDetail.picture)  width="200" height="250">
           <div class="desc">
             <h2 class="title">{{movieDetail.shortName}}</h2>
             <span class="tag">{{tags}}</span>
@@ -40,7 +40,7 @@
           <div class="casts-content" ref="content">
             <h2 class="title">影人</h2>
             <div class="cast-item" v-for="item in allCasts" @click="selectCelebrity(item.id,$event)">
-              <img  v-bind:src=item.avatars  width="90" height="120">
+              <img  :src="getImages(item.avatars)"  width="90" height="120">
               <h3 class="item-title">{{item.name}}</h3>
               <span v-if="item.isDirector">导演</span>
             </div>
@@ -105,14 +105,14 @@
               shortName:"",
               name:"",
               releaseTime:"",
-              img:"",
+              picture:"",
               tag:"",
               type:"",
               score:null,
               evaluateNumber:null,
               movieLength:"",
-              director:[],
-              leadActor:[],
+              directors:[],
+              leadActors:[],
               synopsis:''
             }
           }
@@ -169,7 +169,7 @@
       //获取导演和演员的分组
       allCasts() {
         let removeIndex = [];
-        let directors = this.movieDetail.director.split("/")
+        let directors = this.movieDetail.directors;
         directors.forEach((item, index) => {
           item.isDirector = true;
           //avatars 头像
@@ -181,16 +181,16 @@
           this.movieDetail.directors.splice(removeIndex[i - 1], 1);
         }
         removeIndex = []; // 重置移除清单
-        this.movieDetail.casts.forEach((item, index) => {
+        this.movieDetail.leadActors.forEach((item, index) => {
           // console.log(index);
           if (item.avatars === null) { // 有的演员不存在照片
             removeIndex.push(index);
           }
         });
         for (let i = removeIndex.length; i > 0; i--) { // 移除信息不完全的演员
-          this.movieDetail.casts.splice(removeIndex[i - 1], 1);
+          this.movieDetail.leadActors.splice(removeIndex[i - 1], 1);
         }
-        return this.movieDetail.directors.concat(this.movieDetail.casts);
+        return this.movieDetail.directors.concat(this.movieDetail.leadActors);
       },
 
 
@@ -281,7 +281,14 @@
           let data = JSON.parse(res.data)
           this.movieDetail = data;
         });
-      }
+      },
+      // 解决403图片缓存问题
+      getImages( _url ){
+        if( _url !== undefined ){
+          let _u = _url.substring( 7 );
+          return 'https://images.weserv.nl/?url=' + _u;
+        }
+      },
     },
     components: {
       Star,
