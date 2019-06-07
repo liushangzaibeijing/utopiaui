@@ -1,15 +1,20 @@
 <template>
   <div class="movie-info centerMeBox">
     <el-row gutter="100">
-      <el-col :span="15" >
+      <el-col :span="20" >
+        <h1 class="title" style="font-size:3em;">{{movieDetail.name}}</h1>
         <div class="overall">
-          <img v-bind:src=getImages(movieDetail.picture)  width="200" height="250">
+          <img v-bind:src=getImages(movieDetail.picture)  width="300" height="350">
           <div class="desc">
-            <h2 class="title">{{movieDetail.shortName}}</h2>
-            <span class="tag">{{tags}}</span>
-            <span class="original-title">原名: {{movieDetail.name}}</span>
-            <span class="pubdate">上映时间: {{pubdate}}</span>
-            <span class="duration">片长: {{durations}}</span>
+            <span class="tag">导演: <span class="tag_content">{{movieDetail.director}}</span></span>
+            <span class="tag">制片: <span class="tag_content">{{movieDetail.screenWriter}}</span></span>
+            <span class="tag">主演: <span class="tag_content">{{movieDetail.leadActor}}</span></span>
+            <span class="tag">类型:  <span class="tag_content">{{movieDetail.tag}}</span></span>
+            <span class="tag">别名:  <span class="tag_content">{{movieDetail.alias}}</span></span>
+            <span class="tag">制片国家/地区:  <span class="tag_content">{{movieDetail.filmmakingArea}}</span></span>
+            <span class="tag">语言:  <span class="tag_content">{{movieDetail.language}}</span></span>
+            <span class="tag">上映日期:  <span class="tag_content">{{movieDetail.releaseTime}}</span></span>
+            <span class="tag">片长:  <span class="tag_content">{{movieDetail.movieLength}}</span></span>
           </div>
           <div class="rank">
             <span class="origin">豆瓣评分</span>
@@ -33,24 +38,29 @@
           </div>
         </div>
         <div class="summary">
-          <h2 class="title">{{movieDetail.shortName}}的剧情简介</h2>
+          <h1>{{movieDetail.shortName}}的剧情简介</h1>
           <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.synopsis}}</p>
         </div>
         <scroll class="casts" :scrollX="this.scrollX" :eventPassthrough="this.eventPassthrough" ref="scroll">
           <div class="casts-content" ref="content">
             <h2 class="title">影人</h2>
-            <div class="cast-item" v-for="item in allCasts" @click="selectCelebrity(item.id,$event)">
-              <img  :src="getImages(item.avatars)"  width="90" height="120">
-              <h3 class="item-title">{{item.name}}</h3>
-              <span v-if="item.isDirector">导演</span>
-            </div>
-            <div class="no-result" v-if="!allCasts.length">
-              抱歉，暂无影人信息 :(
-            </div>
+          <Row class="image-list" :gutter="16">
+            <Col :lg="6" :sm="12" class="cast-item" v-for="item in allCasts" :key="item.id" @click="selectCelebrity(item.id,$event)">
+                <img  :src="getImages(item.avatars)" >
+                <h3 class="item-title">{{item.name}}</h3>
+                <span v-if="item.isDirector">导演</span>
+                <span v-else="!item.isDirector">演员</span>
+              <div class="no-result" v-if="!allCasts.length">
+                抱歉，暂无影人信息 :(
+              </div>
+            </Col>
+
+
+          </Row>
           </div>
         </scroll>
        </el-col>
-      <el-col :span="9">
+      <el-col :span="4">
         <MovieTag></MovieTag>
       </el-col>
     </el-row>
@@ -67,24 +77,6 @@
     props: {
       movieDetail: {
         type: Object,
-        default: function(){
-          return {
-            id:"2",
-            title:"爱在西元前",
-            original_title:"爱在西元前(原名)",
-            year:"2019.06.07",
-            img:require('@/assets/img/img-1.jpg'),
-            genres:["家庭","喜剧"],
-            rating:2,
-            ratings_count:"2345",
-            duration:"110分钟",
-            pubdates:"2019.06.07",
-            directors:[{id:'1',isDirector:true,avatars:"./avatar.jpg",name:'贾斯丁比伯'}],
-            casts:[{id:'1',avatars:"./avatar.jpg",name:'贾斯丁比伯'}],
-            summary:'电影《双生》讲述了艺术学校学生李品（刘昊然饰），在一次偶然的机遇下获得了一份为期一个月的兼职工作，工作内容是为马上迎来自己生日的女孩涛（陈都灵）画肖像画，为此他来到了一处偏僻的豪宅。素不相识的两位年轻人因此结缘，一段青春的邂逅就此展开，然而在朝夕相处的过程中，李品逐渐发现了这栋房子里似乎还隐藏着一些不为人知的秘密，而他与涛之间的关系也逐渐变得微妙起来。'
-
-          }
-        }
       }
     },
     data() {
@@ -307,7 +299,7 @@
     padding: 0 20px
     .overall
       display: flex
-      height: 250px
+      height: 520px
       justify-content: space-between
       .desc
         /*flex: 70% 0 0*/
@@ -321,11 +313,19 @@
           font-size: $font-size-large
           color: $color-text-f
           padding: 10px 0 5px 0
-        span
+        .tag
+          text-align: left
+          margin: 10px
+          font: 12px Arial, Helvetica, sans-serif;
+          line-height: 150%;
+          color: #666666;
+          .tag_content
+            color: #37a;
+    span
           font-size: $font-size-small
       .rank
-        height: 100px
-        width: 130px
+        height: 155px
+        width: 400px
         margin-top: 15px
         padding: 10px 15px
         display: flex
@@ -344,6 +344,7 @@
     .summary
       margin-top: 20px
       padding-top: 20px
+      text-align :left
       border-top-1px(#ccc)
       .title
         font-size: $font-size-small
@@ -353,7 +354,7 @@
         color: $color-text-f
         line-height: 25px
     .operate
-      margin-top: 20px
+      margin-top: 50px
       line-height: 35px
       height: 35px
       display: flex
@@ -393,15 +394,16 @@
           font-size: $font-size-small
           padding-bottom: 20px
         .cast-item
-          width: 90px
+          width: 165px
+          height: 290px
           vertical-align: top
-          display: inline-block
+          display:inline-block
           text-align: center
           margin-right: 8px
           font-size: $font-size-small
           img
-            height: 120px
-            width: 90px
+            height: 195px
+            width: 165px
           .item-title
             color: $color-text-f
             padding: 8px 0 5px 0
