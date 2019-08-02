@@ -6,41 +6,52 @@
         v-for="(movieTag, index) in movieTags"
         :key="index"
         class="aside-item"
-        :class="{'active-movie-tag': movieTag === currentMovieTag}"
+        :class="{'active-movie-tag': movieTag.name === currentMovieTag.name}"
         @click="changeMovieTag(movieTag)"
       >
-        {{movieTag}}
+        {{movieTag.name}}
       </li>
     </ul>
   </aside>
 </template>
 
 <script>
+import { selectMovieTags} from "../../api/api";
 export default {
   name: 'MovieTag',
-  computed: {
-    movieTags () {
-      //return this.$store.state.movie.movieTags
-      return ["热门", "最新", "经典", "华语", "欧美", "韩国", "日本", "动作", "喜剧", "爱情", "科幻", "悬疑", "恐怖", "动画", "可播放", "豆瓣高分", "冷门佳片"]
-    },
-    currentMovieTag () {
-      // return this.$store.state.movie.currentMovieTag
-      return "经典"
-    },
-    tagMovies () {
-      return this.$store.state.movie.tagMovies
+  data() {
+    return {
+      movieTags: [],
+      tag:null,
     }
+  },
+    computed: {
+
+    currentMovieTag () {
+      return this.movieTags[0];
+    },
+
   },
 
   methods: {
+    //点击电影标签 查询指定的电影
     changeMovieTag (tag) {
-      this.$store.commit('SET_CURRENT_MOVIE_TAG', tag)
-      if (!this.tagMovies[tag]) {
-        this.$store.dispatch('getCurrentTagMovies', {count: 20})
-      } else {
-        this.$store.commit('SET_CURRENT_TAG_MOVIES', this.tagMovies[tag])
-      }
+
+      //往父组件中传输数据
+      this.$emit('getMovieShow',data)
+    },
+    //查询电影的所有标签
+    selectMovieTags(){
+      selectMovieTags({}).then(res => {
+        // res msg code
+        let data = JSON.parse(res.data)
+        this.movieTags = data;
+      });
     }
+  },
+
+  mounted() {
+    this.selectMovieTags();
   }
 }
 </script>

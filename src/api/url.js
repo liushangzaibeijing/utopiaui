@@ -4,5 +4,7 @@ export default {
   //获取电影简写信息列表
   getMovieList:base + '/movie/movieListPage',
   //获取单个页面详情
-  getMovie:base + '/movie/movieDetail'
+  getMovie:base + '/movie/movieDetail',
+  //获取所有的电影标签
+  selectMovieTags:base + '/tag/selectMovieTags'
 }

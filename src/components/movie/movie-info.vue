@@ -266,7 +266,6 @@
         //this.$refs.content.style.width = width + 'px';
       },
       getMovie(){
-        debugger
         console.log("id "+this.$route.query.id)
         getMovie(Number.parseInt(this.$route.query.id)).then(res => {
           // res msg code
