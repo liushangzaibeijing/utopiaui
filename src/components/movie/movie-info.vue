@@ -61,7 +61,7 @@
         </scroll>
        </el-col>
       <el-col :span="4">
-        <MovieTag></MovieTag>
+        <MovieTag v-on:sendTagId="getMovieByTagId"></MovieTag>
       </el-col>
     </el-row>
   </div>
@@ -279,6 +279,14 @@
           let _u = _url.substring( 7 );
           return 'https://images.weserv.nl/?url=' + _u;
         }
+      },
+      //根据用户点击的标签重新查询对应标签下的电影
+      getMovieByTagId:function (tagId){
+        this.movieQuery.pageNum = 1;
+        //添加标签类型
+        this.movieQuery.type = tagId;
+        //再次进行查询
+        this.selectMovieList();
       },
     },
     components: {

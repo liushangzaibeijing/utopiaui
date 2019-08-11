@@ -38,7 +38,7 @@ export default {
     changeMovieTag (tag) {
 
       //往父组件中传输数据
-      this.$emit('getMovieShow',data)
+      this.$emit('sendTagId',tag.id);
     },
     //查询电影的所有标签
     selectMovieTags(){
