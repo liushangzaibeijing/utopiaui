@@ -28,7 +28,8 @@
     </Row>
       </el-col>
       <el-col :span="3">
-          <MovieTag></MovieTag>
+           <!-- 子组件向父组件传递参数   this.$emit('sendTagId',tag.id);  -->
+          <MovieTag v-on:sendTagId="getMovieByTagId"></MovieTag>
       </el-col>
     </el-row>
   </div>
@@ -59,11 +60,13 @@
         total:20,
         movieQuery:{
           pageNum:null,
-          pageSize:null
+          pageSize:null,
+          type:null   //电影标签
         }
       }
     },
     methods: {
+      //页码改变触发重新获取电影信息
       updateDataShow: function () {
         this.movieQuery.pageNum = this.currentPage - 1
         this.movieQuery.pageSize = this.showNum;
@@ -74,6 +77,7 @@
         this.currentPage = page
         this.updateDataShow()
       },
+      //电影的搜索操作
       search: function () {
         let that = this
         let tempData = that.data
@@ -87,6 +91,7 @@
           }
         })
       },
+      //删除操作暂时没有用到
       deleteOk: function (data) {
         this.$emit('delete-ok', data)
       },
@@ -99,6 +104,7 @@
           this.parseData(data)
         });
       },
+      //电影数据信息的转换
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
         console.log(this.dataShow)
@@ -106,6 +112,14 @@
         this.total = data.total
         this.currentPage = data.page
 
+      },
+      //根据用户点击的标签重新查询对应标签下的电影
+      getMovieByTagId:function (tagId){
+        this.movieQuery.pageNum = 1;
+        //添加标签类型
+        this.movieQuery.type = tagId;
+        //再次进行查询
+        this.selectMovieList();
       }
     },
     watch: {
