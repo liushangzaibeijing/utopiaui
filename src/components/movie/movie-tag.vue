@@ -6,7 +6,7 @@
         v-for="(movieTag, index) in movieTags"
         :key="index"
         class="aside-item"
-        :class="{'active-movie-tag': movieTag.name === currentMovieTag.name}"
+        :class="{'active-movie-tag': movieTag.name === currentTag.name}"
         @click="changeMovieTag(movieTag)"
       >
         {{movieTag.name}}
@@ -23,6 +23,7 @@ export default {
     return {
       movieTags: [],
       tag:null,
+      currentTag:{},
     }
   },
     computed: {
@@ -36,9 +37,10 @@ export default {
   methods: {
     //点击电影标签 查询指定的电影
     changeMovieTag (tag) {
-
+      this.currentTag =  tag;
       //往父组件中传输数据
       this.$emit('sendTagId',tag.id);
+
     },
     //查询电影的所有标签
     selectMovieTags(){
@@ -47,7 +49,8 @@ export default {
         let data = JSON.parse(res.data)
         this.movieTags = data;
       });
-    }
+    },
+
   },
 
   mounted() {
@@ -58,9 +61,9 @@ export default {
 
 <style scoped>
   .aside-item:hover{
-    background: #f0f3f5;
+    background: #dfd7d7;
   }
   .active-movie-tag{
-    background: #f0f3f5;
+    background: #dfd7d7;
   }
 </style>

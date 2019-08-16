@@ -72,7 +72,7 @@
   import Scroll from '@/base/scroll/scroll';
   import MovieTag from '@/components/movie/movie-tag'
   import { getMovie } from "../../api/api";
-
+  import MovieImageList from '@/components/movie/movie-image-list'
   export default {
     props: {
       movieDetail: {
@@ -282,11 +282,16 @@
       },
       //根据用户点击的标签重新查询对应标签下的电影
       getMovieByTagId:function (tagId){
-        this.movieQuery.pageNum = 1;
-        //添加标签类型
-        this.movieQuery.type = tagId;
-        //再次进行查询
-        this.selectMovieList();
+        // this.movieQuery.pageNum = 1;
+        // //添加标签类型
+        // this.movieQuery.type = tagId;
+        // //再次进行查询
+        // this.selectMovieList();
+        //跳转路由并添加参数
+        this.$router.push({
+          path: "/movie",
+          query: { pageNum: 1,type:tagId}
+        })
       },
     },
     components: {

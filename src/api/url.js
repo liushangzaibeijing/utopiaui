@@ -1,4 +1,5 @@
-const base = 'http://49.232.47.236:8035/utopia';
+// const base = 'http://49.232.47.236:8035/utopia';
+const base = '/utopia';
 
 export default {
   //获取电影简写信息列表

@@ -6,7 +6,6 @@
       <el-popover
         placement="right"
         width="300"
-        open-delay=200
         trigger="hover">
           <div>
             <el-row>

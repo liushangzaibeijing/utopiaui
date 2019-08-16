@@ -13,7 +13,7 @@
           <span>第</span>
           <Input :max="40" :min="1" :number="true" v-model="showNum" class="input-number" @on-change=" updateDataShow "></Input>
           <span class="margin-end">/ 页</span>
-          <span class="total">总页数 {{ total }}</span>
+          <span class="total">总数 {{ total }}</span>
           <Page :total="total" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
         </Row>
       </Row>
@@ -68,7 +68,7 @@
     methods: {
       //页码改变触发重新获取电影信息
       updateDataShow: function () {
-        this.movieQuery.pageNum = this.currentPage - 1
+        this.movieQuery.pageNum = this.currentPage
         this.movieQuery.pageSize = this.showNum;
         this.selectMovieList();
       },
