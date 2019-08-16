@@ -16,12 +16,13 @@
           class="el-col-22"
         ></el-autocomplete>
       </div>
+
       <div class="el-col-10 el-col">
         <el-menu  class="el-menu-demo "
                  mode="horizontal"  @select="handleSelect"
                  id="utopia-menu"
                  text-color="#fff"
-                 active-text-color="#ffd04b">
+                 active-text-color="#ffd04b" style="background-color: #409EFF;">
 
           <template v-for="(level1, index1) in $router.options.routes" v-if="level1.menu">
           <el-menu-item
@@ -35,6 +36,7 @@
           </template>
         </el-menu>
       </div>
+
     </div>
 
     <div class="right" v-if="!minScreen">
@@ -299,6 +301,9 @@ export default {
     }
     .user-info {
       color: #ffffff;
+    }
+    .el-menu-item.is-active {
+      background-color: rgb(231, 235, 240) !important;
     }
   }
 }
