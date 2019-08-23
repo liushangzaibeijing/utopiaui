@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import TheLayout from '@/pages/layout/TheLayout'
-import ImageList from '@/pages/functions/book/ImageList'
 import movieImgList from '@/pages/functions/moive/movieList'
 import movieInfo from '@/components/movie/movie-info'
 
