@@ -11,7 +11,7 @@
             <el-row>
               <el-col :span="24">
                  <a onclick="showBookDetail">
-                   <span  style=" font-size: 25px; color: #666699">{{book.name}} &nbsp;&nbsp;({{getReleaseYear(movie.releaseTime)}})</span>
+                   <span  style=" font-size: 25px; color: #666699">{{book.name}} &nbsp;&nbsp;({{getReleaseYear(book.publication_date)}})</span>
                  </a>
               </el-col>
             </el-row>
@@ -26,52 +26,53 @@
 
               </el-col>
               <el-col :span="13">
-                <span>   <span style="color: #e09015; font-size: 13px;">{{score*2}}</span>&nbsp;&nbsp;&nbsp;&nbsp;({{movie.evaluateNumber}}评价)</span>
+                <span>   <span style="color: #e09015; font-size: 13px;">{{score*2}}</span>&nbsp;&nbsp;&nbsp;&nbsp;({{book.evaluateNumber}}评价)</span>
               </el-col>
             </el-row>
             <br />
             <el-row :gutter="2"  >
-              <el-tag class="info" style="margin: 10px;" v-for="(item,index) in movieTypes"  :key="index"> {{item}} </el-tag>
-<!--                <el-tag class="info"  > {{item}} </el-tag>-->
-<!--                <el-tag class="info"  > {{movie.filmmakingArea}}  </el-tag>-->
-<!--                &lt;!&ndash; 需要遍历标签&ndash;&gt;-->
-<!--                <el-tag class="info" > {{movie.tag}} </el-tag>-->
+              <span><el-tag type="success" > </el-tag>&nbsp;&nbsp;&nbsp;{{book.tag}} </span>
             </el-row>
             <br />
             <el-row >
               <el-col :span="24">
-
-                <span><el-tag type="success" > 导演：</el-tag>&nbsp;&nbsp;&nbsp;{{book.director}} </span>
+                <span><el-tag type="success" > 作者：</el-tag>&nbsp;&nbsp;&nbsp;{{book.author}} </span>
+              </el-col>
+            </el-row>
+            <br />
+            <el-row v-if="book.translator===null || book.translator===''" >
+              <el-col :span="24">
+                <span> <el-tag type="success" > 译者：</el-tag>&nbsp;&nbsp;&nbsp;{{book.translator}} </span>
               </el-col>
             </el-row>
             <br />
             <el-row >
               <el-col :span="24">
-                <span> <el-tag type="success" > 主演：</el-tag>&nbsp;&nbsp;&nbsp;{{book.leadActor}} </span>
+                <span> <el-tag type="success" > 价格： </el-tag> &nbsp;&nbsp;{{book.price}}</span>
               </el-col>
             </el-row>
             <br />
             <el-row >
               <el-col :span="24">
-                <span> <el-tag type="success" > 剧情： </el-tag> &nbsp;&nbsp;{{book.synopsis}}</span>
+                <span> <el-tag type="success" > 书籍描述： </el-tag> &nbsp;&nbsp;{{book.descption}}</span>
               </el-col>
             </el-row>
           </div>
-         <img slot="reference"  id="movieImg" :src="getImages(book.picture)" alt=""  @click="showMovieDetail()" />
+         <img slot="reference"  id="movieImg" :src="getImages(book.picture)" alt=""  @click="showBookDetail()" />
       </el-popover>
 
     </div>
     <div class="card-desc panel-body ">
-      <p class="p-style">{{ book.shortName }}&nbsp;&nbsp;&nbsp;<strong>{{book.score}}</strong></p>
+      <p class="p-style">{{ book.name }}&nbsp;&nbsp;&nbsp;<strong>{{book.score}}</strong></p>
     </div>
   </div>
 </template>
 <script>
   export default {
-    name: 'MovieCard',
+    name: 'BookCard',
 
     props: {
-      movie: {
+      book: {
         type: Object,
       },
 
@@ -79,7 +80,6 @@
     data: function () {
       return {
         modalDetail: false,
-        movieTypes:[],
         score:5.0,
       }
     },
@@ -87,9 +87,10 @@
       deleteOk: function () {
         this.$emit('delete-ok')
       },
-      showMovieDetail(){
+      //进入商品详情页
+      showBookDetail(){
         this.$router.push({
-          path: '/movieInfo',
+          path: '/bookInfo',
           query:{id:this.movie.id},
         })
       },
@@ -109,21 +110,7 @@
     },
 
     mounted(){
-      this.score = this.movie.score/2;
-      let movieLengths = this.movie.movieLength.split("/");
-      movieLengths.forEach(item => {
-        this.movieTypes.push(item)
-      });
-      let filmmakingAreas = this.movie.filmmakingArea.split("/");
-      filmmakingAreas.forEach(item => {
-        this.movieTypes.push(item)
-      });
-      let tags = this.movie.tag.split("/");
-      tags.forEach(item => {
-        this.movieTypes.push(item)
-      });
-
-      console.log("总记录 "+this.movieTypes);
+      this.score = this.book.score/2;
     }
   }
 </script>
