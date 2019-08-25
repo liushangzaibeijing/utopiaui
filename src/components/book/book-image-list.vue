@@ -22,7 +22,7 @@
       <Row class="image-list" :gutter="16">
         <Col :lg="6" :sm="12" class="vm-margin" v-for="item in dataShow" :key="item.id">
           <!-- 每一个图片的显示列表组建是 VmCard组件 传递的参数  editable是否可编辑  图片标题  图片描述 图片地址 编辑地址  删除-->
-          <BookCard :editable="false" :movie="item" ></BookCard>
+          <BookCard :editable="false" :book="item" ></BookCard>
         </Col>
       </Row>
     </Row>
@@ -39,7 +39,7 @@
 <script>
   import BookCard from '@/components/book/book-card'
   import BookTag from '@/components/book/book-tag'
-  import { getMovieList} from "../../api/api";
+  import { getBookList} from "../../api/api";
   export default {
     name: 'BookImageList',
     components: {
@@ -55,7 +55,7 @@
       return {
         keyword: '', // keyword for search
         dataShow: [], // data for showing
-        showNum: 20, // number of item per page
+        showNum: 1, // number of item per page
         currentPage: 1,
         total:20,
         bookQuery:{
@@ -108,7 +108,7 @@
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
         console.log(this.dataShow)
-        this.showNum = data.size;
+        this.showNum = data.page;
         this.total = data.total
         this.currentPage = data.page
 

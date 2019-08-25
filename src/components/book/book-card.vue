@@ -10,8 +10,8 @@
           <div>
             <el-row>
               <el-col :span="24">
-                 <a onclick="showBookDetail">
-                   <span  style=" font-size: 25px; color: #666699">{{book.name}} &nbsp;&nbsp;({{getReleaseYear(book.publication_date)}})</span>
+                 <a onclick="showBookDetailshowBookDetail">
+                   <span  style=" font-size: 25px; color: #666699">{{book.name}} &nbsp;&nbsp;({{getReleaseYear(book.publicationDate)}})</span>
                  </a>
               </el-col>
             </el-row>
@@ -31,7 +31,7 @@
             </el-row>
             <br />
             <el-row :gutter="2"  >
-              <span><el-tag type="success" > </el-tag>&nbsp;&nbsp;&nbsp;{{book.tag}} </span>
+              <span><el-tag type="success" >类型：</el-tag>&nbsp;&nbsp;&nbsp;{{book.tagName}} </span>
             </el-row>
             <br />
             <el-row >
@@ -63,7 +63,7 @@
 
     </div>
     <div class="card-desc panel-body ">
-      <p class="p-style">{{ book.name }}&nbsp;&nbsp;&nbsp;<strong>{{book.score}}</strong></p>
+      <p class="p-style">{{ book.shortName }}&nbsp;&nbsp;&nbsp;<strong>{{book.score}}</strong></p>
     </div>
   </div>
 </template>

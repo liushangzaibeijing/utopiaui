@@ -3,58 +3,58 @@
     <h2 class="content-header">电影分类</h2>
     <ul>
       <li
-        v-for="(movieTag, index) in movieTags"
+        v-for="(bookTag, index) in bookTags"
         :key="index"
         class="aside-item"
-        :class="{'active-movie-tag': movieTag.name === currentTag.name}"
-        @click="changeMovieTag(movieTag)"
+        :class="{'active-movie-tag': bookTag.name === currentTag.name}"
+        @click="changeBookTag(bookTags)"
       >
-        {{movieTag.name}}
+        {{bookTag.name}}
       </li>
     </ul>
   </aside>
 </template>
 
 <script>
-import { selectMovieTags} from "../../api/api";
+import { selectBookTags } from "../../api/api";
 export default {
-  name: 'MovieTag',
+  name: 'BookTag',
   data() {
     return {
-      movieTags: [],
+      bookTags: [],
       tag:null,
       currentTag:{},
     }
   },
     computed: {
 
-    currentMovieTag () {
-      return this.movieTags[0];
+    currentBookTag () {
+      return this.bookTags[0];
     },
 
   },
 
   methods: {
-    //点击电影标签 查询指定的电影
-    changeMovieTag (tag) {
+    //点击书籍标签 查询指定的书籍
+    changeBookTag (tag) {
       this.currentTag =  tag;
       //往父组件中传输数据
       this.$emit('sendTagId',tag.id);
 
     },
     //查询电影的所有标签
-    selectMovieTags(){
-      selectMovieTags({}).then(res => {
+    selectBookTags(){
+      selectBookTags({}).then(res => {
         // res msg code
         let data = JSON.parse(res.data)
-        this.movieTags = data;
+        this.bookTags = data;
       });
     },
 
   },
 
   mounted() {
-    this.selectMovieTags();
+    this.selectBookTags();
   }
 }
 </script>

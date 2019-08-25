@@ -72,7 +72,6 @@
   import Scroll from '@/base/scroll/scroll';
   import MovieTag from '@/components/movie/movie-tag'
   import { getMovie } from "../../api/api";
-  import MovieImageList from '@/components/movie/movie-image-list'
   export default {
     props: {
       movieDetail: {

@@ -55,7 +55,7 @@
       return {
         keyword: '', // keyword for search
         dataShow: [], // data for showing
-        showNum: 20, // number of item per page
+        showNum: 1, // number of item per page
         currentPage: 1,
         total:20,
         movieQuery:{
@@ -75,6 +75,7 @@
       pageChange: function (page) {
         console.log("当前页码数："+page)
         this.currentPage = page
+        this.showNum = page;
         this.updateDataShow()
       },
       //电影的搜索操作
@@ -108,7 +109,7 @@
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
         console.log(this.dataShow)
-        this.showNum = data.size;
+        this.showNum = data.page;
         this.total = data.total
         this.currentPage = data.page
 

@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import TheLayout from '@/pages/layout/TheLayout'
 import movieImgList from '@/pages/functions/moive/movieList'
 import movieInfo from '@/components/movie/movie-info'
+import bookImgList from '@/pages/functions/book/bookList'
+import bookInfo from '@/components/book/book-info'
 
 Vue.use(Router)
 
@@ -17,7 +19,7 @@ export default new Router({
           path: '/book',
           name: 'menu.book',
           icon: 'el-icon-reading',
-          component: movieImgList
+          component: bookImgList
         }
       ]
     },
@@ -54,6 +56,16 @@ export default new Router({
         {
           path: '/movieInfo',
           component: movieInfo
+        }
+      ]
+    },
+    {
+      path: '/bookInfo',
+      component: TheLayout,
+      children: [
+        {
+          path: '/bookInfo',
+          component: bookInfo
         }
       ]
     },

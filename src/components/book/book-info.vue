@@ -2,66 +2,63 @@
   <div class="movie-info centerMeBox">
     <el-row gutter="100">
       <el-col :span="20" >
-        <h1 class="title" style="font-size:3em;">{{movieDetail.name}}</h1>
+        <h1 class="title" style="font-size:3em;">{{bookDetail.name}}</h1>
         <div class="overall">
-          <img v-bind:src=getImages(movieDetail.picture)  width="300" height="350">
+          <img v-bind:src=getImages(bookDetail.picture)  width="300" height="350">
           <div class="desc">
-            <span class="tag">导演: <span class="tag_content">{{movieDetail.director}}</span></span>
-            <span class="tag">制片: <span class="tag_content">{{movieDetail.screenWriter}}</span></span>
-            <span class="tag">主演: <span class="tag_content">{{movieDetail.leadActor}}</span></span>
-            <span class="tag">类型:  <span class="tag_content">{{movieDetail.tag}}</span></span>
-            <span class="tag">别名:  <span class="tag_content">{{movieDetail.alias}}</span></span>
-            <span class="tag">制片国家/地区:  <span class="tag_content">{{movieDetail.filmmakingArea}}</span></span>
-            <span class="tag">语言:  <span class="tag_content">{{movieDetail.language}}</span></span>
-            <span class="tag">上映日期:  <span class="tag_content">{{movieDetail.releaseTime}}</span></span>
-            <span class="tag">片长:  <span class="tag_content">{{movieDetail.movieLength}}</span></span>
+            <span class="tag">作者: <span class="tag_content">{{bookDetail.author}}</span></span>
+            <span class="tag">译者: <span class="tag_content">{{bookDetail.translator}}</span></span>
+            <span class="tag">出版社: <span class="tag_content">{{bookDetail.publisHouse}}</span></span>
+            <span class="tag">类型: <span class="tag_content">{{bookDetail.tag}}</span></span>
+            <span class="tag">出版日期:  <span class="tag_content">{{bookDetail.publicationDate}}</span></span>
+            <span class="tag">价格:  <span class="tag_content">{{bookDetail.price}}</span></span>
           </div>
           <div class="rank">
             <span class="origin">豆瓣评分</span>
             <span class="rating" v-if="rating">{{normalizeScore()}}</span>
-            <star :size="24" :score="movieDetail.rating" :needNullStar="needNullStar"></star>
-            <span class="num" v-if="rating">{{movieDetail.evaluateNumber}}人评价</span>
+            <star :size="24" :score="bookDetail.score" :needNullStar="needNullStar"></star>
+            <span class="num" v-if="rating">{{bookDetail.evaluateNumber}}人评价</span>
           </div>
         </div>
         <div class="operate">
           <div class="want-watch"
-               @click="saveWantedMovie"
-               :class="{'wanted': isWanted(movieDetail.id)}"
+               @click="saveWantedBook"
+               :class="{'wanted': isWanted(bookDetail.id)}"
                v-text="wantedText"
           ></div>
           <div class="has-watched"
-               @click="saveWatchedMovie"
-               :class="{'watched': isWatched(movieDetail.id)}"
+               @click="saveWatchedBook"
+               :class="{'watched': isWatched(bookDetail.id)}"
           >
             <img src="avatar.jpg" alt="" v-show="hasWatched" >
             {{watchedText}}
           </div>
         </div>
         <div class="summary">
-          <h1>{{movieDetail.shortName}}的剧情简介</h1>
-          <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;{{movieDetail.synopsis}}</p>
+          <h1>{{bookDetail.name}}的剧情简介</h1>
+          <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;{{bookDetail.descption}}</p>
         </div>
-        <scroll class="casts" :scrollX="this.scrollX" :eventPassthrough="this.eventPassthrough" ref="scroll">
-          <div class="casts-content" ref="content">
-            <h2 class="title">影人</h2>
-          <Row class="image-list" :gutter="16">
-            <Col :lg="6" :sm="12" class="cast-item" v-for="item in allCasts" :key="item.id" @click="selectCelebrity(item.id,$event)">
-                <img  :src="getImages(item.avatars)" >
-                <h3 class="item-title">{{item.name}}</h3>
-                <span v-if="item.isDirector">导演</span>
-                <span v-else="!item.isDirector">演员</span>
-              <div class="no-result" v-if="!allCasts.length">
-                抱歉，暂无影人信息 :(
-              </div>
-            </Col>
+<!--        <scroll class="casts" :scrollX="this.scrollX" :eventPassthrough="this.eventPassthrough" ref="scroll">-->
+<!--          <div class="casts-content" ref="content">-->
+<!--            <h2 class="title">作者</h2>-->
+<!--          <Row class="image-list" :gutter="16">-->
+<!--            <Col :lg="6" :sm="12" class="cast-item" v-for="item in allCasts" :key="item.id" @click="selectCelebrity(item.id,$event)">-->
+<!--                <img  :src="getImages(item.avatars)" >-->
+<!--                <h3 class="item-title">{{item.name}}</h3>-->
+<!--                <span v-if="item.isDirector">导演</span>-->
+<!--                <span v-else="!item.isDirector">演员</span>-->
+<!--              <div class="no-result" v-if="!allCasts.length">-->
+<!--                抱歉，暂无影人信息 :(-->
+<!--              </div>-->
+<!--            </Col>-->
 
 
-          </Row>
-          </div>
-        </scroll>
+<!--          </Row>-->
+<!--          </div>-->
+<!--        </scroll>-->
        </el-col>
       <el-col :span="4">
-        <MovieTag v-on:sendTagId="getMovieByTagId"></MovieTag>
+        <MovieTag v-on:sendTagId="getBookByTagId"></MovieTag>
       </el-col>
     </el-row>
   </div>
@@ -70,12 +67,11 @@
 <script>
   import Star from '@/base/star/star';
   import Scroll from '@/base/scroll/scroll';
-  import MovieTag from '@/components/movie/movie-tag'
-  import { getMovie } from "../../api/api";
-  import MovieImageList from '@/components/movie/movie-image-list'
+  import MovieTag from '@/components/book/book-tag'
+  import { getBook } from "../../api/api";
   export default {
     props: {
-      movieDetail: {
+      bookDetail: {
         type: Object,
       }
     },
@@ -88,31 +84,30 @@
         wanted: false,
         wantedText: '想看',
         hasWatched: false,
-        movie:{id:"2"},
-        movieDetail: {
+        book:{id:"2"},
+        bookDetail: {
           type: Object,
-          default: function(){
-            return {
-              id:"",
-              shortName:"",
-              name:"",
-              releaseTime:"",
-              picture:"",
-              tag:"",
-              type:"",
-              score:null,
-              evaluateNumber:null,
-              movieLength:"",
-              directors:[],
-              leadActors:[],
-              synopsis:''
-            }
-          }
+          // default: function(){
+          //   return {
+          //     id:"",
+          //     name:"",
+          //     releaseTime:"",
+          //     picture:"",
+          //     tag:"",
+          //     type:"",
+          //     score:null,
+          //     evaluateNumber:null,
+          //     movieLength:"",
+          //     directors:[],
+          //     leadActors:[],
+          //     synopsis:''
+          //   }
+          // }
         }
       };
     },
     mounted() {
-      this.getMovie();
+      this.getBook();
       //vue给我们提供了$nextTick方法，如果我们想对未来更新后的视图进行操作，
       // 我们只需要把要执行的函数传递给this.$nextTick方法
       this.$nextTick(() => {
@@ -125,25 +120,22 @@
     computed: {
       //计算比分
       rating() {
-        let rating = this.movieDetail.rating;
+        let rating = this.bookDetail.score;
         if (rating === 0) {
           return false;
         }
         return true;
       },
-      //获取电影标签
+      //获取书籍标签
       tags() {
-        let year = this.movieDetail.releaseTime;
-        let tag = this.movieDetail.type+"/"+this.movieDetail.tag;
+        let year = this.bookDetail.publiationate;
+        let tag = this.bookDetail.tag;
         return `${year}/${tag}`;
       },
-      //获取片长
-      durations() {
-        return this.movieDetail.movieLength;
-      },
+
       //计算发布日期
       pubdate() {
-        let date = this.movieDetail.releaseTime.substring(0,4);
+        let date = this.bookDetail.publicationDate.substring(0,4);
         // for (let i = 0; i < date.length; i++) {
         //   if (date[i].indexOf('电影节') === -1) {
         //     pubdate = date[i]; // 没有在中国大陆上映，取不为电影节的最后一个信息
@@ -158,33 +150,6 @@
         // }
         return date;
       },
-      //获取导演和演员的分组
-      allCasts() {
-        let removeIndex = [];
-        let directors = this.movieDetail.directors;
-        directors.forEach((item, index) => {
-          item.isDirector = true;
-          //avatars 头像
-          if (item.avatars === null) { // 有的导演不存在照片
-            removeIndex.push(index);
-          }
-        });
-        for (let i = removeIndex.length; i > 0; i--) { // 移除信息不完全的导演
-          this.movieDetail.directors.splice(removeIndex[i - 1], 1);
-        }
-        removeIndex = []; // 重置移除清单
-        this.movieDetail.leadActors.forEach((item, index) => {
-          // console.log(index);
-          if (item.avatars === null) { // 有的演员不存在照片
-            removeIndex.push(index);
-          }
-        });
-        for (let i = removeIndex.length; i > 0; i--) { // 移除信息不完全的演员
-          this.movieDetail.leadActors.splice(removeIndex[i - 1], 1);
-        }
-        return this.movieDetail.directors.concat(this.movieDetail.leadActors);
-      },
-
 
     },
     methods: {
@@ -262,12 +227,12 @@
       _initPics() {
         let picWidth = 90;
         let margin = 8;
-        let width = (picWidth + margin) * this.allCasts.length - margin;
+        // let width = (picWidth + margin) * this.allCasts.length - margin;
         //this.$refs.content.style.width = width + 'px';
       },
-      getMovie(){
+      getBook(){
         console.log("id "+this.$route.query.id)
-        getMovie(Number.parseInt(this.$route.query.id)).then(res => {
+        getBook(Number.parseInt(this.$route.query.id)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
           this.movieDetail = data;
