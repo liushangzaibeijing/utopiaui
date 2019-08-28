@@ -231,7 +231,7 @@
         //this.$refs.content.style.width = width + 'px';
       },
       getBook(){
-        console.log("id "+this.$route.query.id)
+        //console.log("id "+this.$route.query.id)
         getBook(Number.parseInt(this.$route.query.id)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)

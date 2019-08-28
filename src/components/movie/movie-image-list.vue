@@ -14,7 +14,7 @@
               <Input :max="40" :min="1" :number="true" v-model="currentPage" class="input-number" @on-change="updateDataShow" />
               <span class="margin-end">/ 页</span>
               <span class="total">总数 {{ total }}</span>
-              <Page :total="maxPage" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
+              <Page :total="total" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
             </Row>
           </Row>
         </Row>
@@ -56,9 +56,7 @@
         keyword: '', // keyword for search
         dataShow: [], // data for showing
         showNum: 20, // number of item per page
-        currentPage: 1,
         total:20,
-        maxPage:1,
         movieQuery:{
           pageNum:null,
           pageSize:null,
@@ -74,7 +72,7 @@
         this.selectMovieList();
       },
       pageChange: function (page) {
-        console.log("当前页码数："+page)
+        // console.log("当前页码数："+page)
         this.currentPage = page
         this.updateDataShow()
       },
@@ -97,8 +95,8 @@
         this.$emit('delete-ok', data)
       },
       selectMovieList:function () {
-        console.log("当前页码："+JSON.stringify(this.movieQuery))
-        console.log("当前页码："+JSON.stringify(this.movieQuery.pageNum))
+        // console.log("当前页码："+JSON.stringify(this.movieQuery))
+        // console.log("当前页码："+JSON.stringify(this.movieQuery.pageNum))
         getMovieList(JSON.stringify(this.movieQuery)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
@@ -108,9 +106,8 @@
       //电影数据信息的转换
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
-        console.log(this.dataShow)
+        //console.log(this.dataShow)
         this.total = data.total;
-        this.maxPage = data.maxPage;
         this.currentPage = data.page
 
       },

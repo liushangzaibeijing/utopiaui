@@ -103,8 +103,12 @@
       },
       //获取上映时间
       getReleaseYear(releaseTime){
+        debugger
+        if(releaseTime==null && releaseTime.length<=4){
+          return releaseYear
+        }
         let releaseYear = releaseTime.substring(0,4);
-        console.log("上映日期：+"+releaseYear);
+        //console.log("上映日期：+"+releaseYear);
         return releaseYear;
       },
     },

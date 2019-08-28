@@ -6,15 +6,17 @@
       <!-- 搜索框  -->
       <Row type="flex" align="middle" justify="space-between" class="panel-body">
        <div class="search-bar">
-          <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px"></Input>
+          <Input placeholder="Please enter ..." v-model="keyword" style="width: 300px" />
           <Button type="success" round class="searchButton" @click="search"><i class="fa fa-search"></i></Button>
         </div>
         <Row type="flex" align="middle" class="page">
+          <span>{{currentPage}}</span>
           <span>第</span>
-          <Input :max="40" :min="1" :number="true" v-model="currentPage" class="input-number" @on-change=" updateDataShow "></Input>
+          <Input :max="40" :min="1" :number="true" v-model="currentPage" class="input-number" @on-change=" updateDataShow " />
           <span class="margin-end">/ 页</span>
           <span class="total">总记录 {{ total }}</span>
-          <Page :total="maxPage" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
+
+          <Page :total="total" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
         </Row>
       </Row>
     </Row>
@@ -58,7 +60,6 @@
         showNum: 40, // number of item per page
         currentPage: 1,
         total:20,
-        maxPage:1,
         bookQuery:{
           pageNum:null,
           pageSize:null,
@@ -74,9 +75,9 @@
         this.selectBookList();
       },
       pageChange: function (page) {
-        console.log("当前页码数："+page)
-        this.currentPage = page
-        this.updateDataShow()
+        //console.log("当前页码数："+page);
+        this.currentPage = page;
+        this.updateDataShow();
       },
       //电影的搜索操作
       search: function () {
@@ -97,8 +98,7 @@
       //   this.$emit('delete-ok', data)
       // },
       selectBookList:function () {
-        console.log("当前页码："+JSON.stringify(this.bookQuery))
-        console.log("当前页码："+JSON.stringify(this.bookQuery.pageNum))
+        //console.log("当前页码："+JSON.stringify(this.bookQuery.pageNum))
         getBookList(JSON.stringify(this.bookQuery)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
@@ -108,10 +108,8 @@
       //电影数据信息的转换
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
-        console.log(this.dataShow)
-        //this.showNum = data.page;
+        //console.log(this.dataShow)
         this.total = data.total;
-        this.maxPage = data.maxPage;
         this.currentPage = data.page
 
       },
