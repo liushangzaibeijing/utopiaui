@@ -18,6 +18,9 @@ a {
   border-bottom: 1px solid #ddd;
   padding-bottom: 5px;
   color: #333;
+  height: 63px;
+  text-align: center;
+  line-height: 63px
 }
 .content-header h2{
   display: inline-block;

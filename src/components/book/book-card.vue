@@ -5,12 +5,12 @@
       <!-- 鼠标悬浮出现影片描述  -->
       <el-popover
         placement="right"
-        width="300"
+        width="250"
         trigger="hover">
           <div>
             <el-row>
               <el-col :span="24">
-                 <a onclick="showBookDetailshowBookDetail">
+                 <a onclick="showBookDetail">
                    <span  style=" font-size: 25px; color: #666699">{{book.name}} &nbsp;&nbsp;({{getReleaseYear(book.publicationDate)}})</span>
                  </a>
               </el-col>
@@ -91,7 +91,7 @@
       showBookDetail(){
         this.$router.push({
           path: '/bookInfo',
-          query:{id:this.movie.id},
+          query:{id:this.book.id},
         })
       },
       // 解决403图片缓存问题

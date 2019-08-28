@@ -2,8 +2,10 @@ import { saveToLocal, loadFromLocal } from './store';
 const USER_ID = 'buptsky';
 const SEARCH_KEY = '__search__'; // 搜索历史键名
 const COMMENT_KEY = '__comment__'; // 搜索历史键名
-const WATCHED_KEY = '__watched__'; // 已经看过的电影
-const WANTED_KEY = '__wanted__'; // 想看的电影
+const WATCHED_MOVIE_KEY = '__watched_movie__'; // 已经看过的电影
+const WANTED_MOVIE_KEY = '__wanted_movie__'; // 想看的电影
+const WATCHED_BOOK_KEY = '__watched_book__'; // 已经看过的书籍
+const WANTED_BOOK_KEY = '__wanted_book__'; // 想看的书籍
 const CELEBRITY_KEY = '__celebrity__'; // 收藏的影人
 const SEARCH_MAX_LENGTH = 20;
 const COMMENT_MAX_LENGTH = 300;
@@ -78,7 +80,7 @@ export function loadComment() {
 // 保存标记结果
 export function saveWatchedMovie(movie) {
   const maxLen = WATCHED_MAX_LENGTH;
-  let movies = loadFromLocal(USER_ID, WATCHED_KEY, []); // 获取不到返回空数组
+  let movies = loadFromLocal(USER_ID, WATCHED_MOVIE_KEY, []); // 获取不到返回空数组
   // 查找缓存数组中是否包含添加的数据，返回索引
   const index = movies.findIndex((item) => {
     return item.id === movie.id;
@@ -92,12 +94,12 @@ export function saveWatchedMovie(movie) {
   } else { // 若已经存在了被标记的id，则代表用户进行了反操作，取消了喜欢
     movies.splice(index, 1);
   }
-  saveToLocal(USER_ID, WATCHED_KEY, movies); // 存入缓存
+  saveToLocal(USER_ID, WATCHED_MOVIE_KEY, movies); // 存入缓存
   return movies;
 }
 // 从缓存中读取
 export function loadWatchedMovie() {
-  return loadFromLocal(USER_ID, WATCHED_KEY, []);
+  return loadFromLocal(USER_ID, WATCHED_MOVIE_KEY, []);
 }
 
 /*
@@ -107,7 +109,7 @@ export function loadWatchedMovie() {
 // 保存标记结果
 export function saveWantedMovie(movie) {
   const maxLen = WANTED_MAX_LENGTH;
-  let movies = loadFromLocal(USER_ID, WANTED_KEY, []); // 获取不到返回空数组
+  let movies = loadFromLocal(USER_ID, WANTED_MOVIE_KEY, []); // 获取不到返回空数组
   // 查找缓存数组中是否包含添加的数据，返回索引
   const index = movies.findIndex((item) => {
     return item.id === movie.id;
@@ -121,12 +123,12 @@ export function saveWantedMovie(movie) {
   } else { // 若已经存在了被标记的id，则代表用户进行了反操作，取消了喜欢
     movies.splice(index, 1);
   }
-  saveToLocal(USER_ID, WANTED_KEY, movies); // 存入缓存
+  saveToLocal(USER_ID, WANTED_MOVIE_KEY, movies); // 存入缓存
   return movies;
 }
 // 从缓存中读取
 export function loadWantedMovie() {
-  return loadFromLocal(USER_ID, WANTED_KEY, []);
+  return loadFromLocal(USER_ID, WANTED_MOVIE_KEY, []);
 }
 
 /*
@@ -136,7 +138,7 @@ export function loadWantedMovie() {
 // 保存标记结果
 export function saveCelebrity(celebrity) {
   const maxLen = CELEBRITY_MAX_LENGTH;
-  let celebrities = loadFromLocal(USER_ID, CELEBRITY_KEY, []); // 获取不到返回空数组
+  let celebrities = loadFromLocal(USER_ID, CELEBRITY_MOVIE_KEY, []); // 获取不到返回空数组
   // 查找缓存数组中是否包含添加的数据，返回索引
   const index = celebrities.findIndex((item) => {
     return item.id === celebrity.id;
@@ -184,4 +186,59 @@ function deleteFromArray(arr, compare) {
   if (index > -1) {
     arr.splice(index, 1);
   }
+}
+
+
+// 保存标记结果 书籍
+export function saveWatchedBooks(book) {
+  const maxLen = WATCHED_MAX_LENGTH;
+  let books = loadFromLocal(USER_ID, WATCHED_BOOK_KEY, []); // 获取不到返回空数组
+  // 查找缓存数组中是否包含添加的数据，返回索引
+  const index = books.findIndex((item) => {
+    return item.id === book.id;
+  });
+  if (index === -1) {
+    books.push(book);
+    // 超过最大长度时移除起始数据
+    if (maxLen && books.length > maxLen) {
+      books.shift();
+    }
+  } else { // 若已经存在了被标记的id，则代表用户进行了反操作，取消了喜欢
+    books.splice(index, 1);
+  }
+  saveToLocal(USER_ID, WATCHED_BOOK_KEY, books); // 存入缓存
+  return books;
+}
+// 从缓存中读取
+export function loadWatchedBooks() {
+  return loadFromLocal(USER_ID, WATCHED_BOOK_KEY, []);
+}
+
+/*
+* 想看的电影
+*/
+
+// 保存标记结果
+export function saveWantedBooks(book) {
+  const maxLen = WANTED_MAX_LENGTH;
+  let books = loadFromLocal(USER_ID, WANTED_BOOK_KEY, []); // 获取不到返回空数组
+  // 查找缓存数组中是否包含添加的数据，返回索引
+  const index = books.findIndex((item) => {
+    return item.id === book.id;
+  });
+  if (index === -1) {
+    books.push(movie);
+    // 超过最大长度时移除起始数据
+    if (maxLen && books.length > maxLen) {
+      books.shift();
+    }
+  } else { // 若已经存在了被标记的id，则代表用户进行了反操作，取消了喜欢
+    books.splice(index, 1);
+  }
+  saveToLocal(USER_ID, WANTED_BOOK_KEY, movies); // 存入缓存
+  return books;
+}
+// 从缓存中读取
+export function loadWantedBooks() {
+  return loadFromLocal(USER_ID, WANTED_BOOK_KEY, []);
 }

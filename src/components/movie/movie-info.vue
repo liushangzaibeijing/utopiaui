@@ -19,7 +19,7 @@
           <div class="rank">
             <span class="origin">豆瓣评分</span>
             <span class="rating" v-if="rating">{{normalizeScore()}}</span>
-            <star :size="24" :score="movieDetail.rating" :needNullStar="needNullStar"></star>
+            <star :size="24" :score="movieDetail.score" :needNullStar="needNullStar"></star>
             <span class="num" v-if="rating">{{movieDetail.evaluateNumber}}人评价</span>
           </div>
         </div>
@@ -124,7 +124,7 @@
     computed: {
       //计算比分
       rating() {
-        let rating = this.movieDetail.rating;
+        let rating = this.movieDetail.score;
         if (rating === 0) {
           return false;
         }

@@ -1,11 +1,11 @@
 <template>
-  <div class="movie-info centerMeBox">
+  <div class="book-info centerMeBox">
     <el-row gutter="100">
       <el-col :span="20" >
         <h1 class="title" style="font-size:3em;">{{bookDetail.name}}</h1>
         <div class="overall">
           <img v-bind:src=getImages(bookDetail.picture)  width="300" height="350">
-          <div class="desc">
+          <div class="desc" style="height:300px; margin-left: -170px;">
             <span class="tag">作者: <span class="tag_content">{{bookDetail.author}}</span></span>
             <span class="tag">译者: <span class="tag_content">{{bookDetail.translator}}</span></span>
             <span class="tag">出版社: <span class="tag_content">{{bookDetail.publisHouse}}</span></span>
@@ -58,7 +58,7 @@
 <!--        </scroll>-->
        </el-col>
       <el-col :span="4">
-        <MovieTag v-on:sendTagId="getBookByTagId"></MovieTag>
+        <BookTag v-on:sendTagId="getBookByTagId"></BookTag>
       </el-col>
     </el-row>
   </div>
@@ -67,14 +67,14 @@
 <script>
   import Star from '@/base/star/star';
   import Scroll from '@/base/scroll/scroll';
-  import MovieTag from '@/components/book/book-tag'
+  import BookTag from '@/components/book/book-tag'
   import { getBook } from "../../api/api";
   export default {
-    props: {
-      bookDetail: {
-        type: Object,
-      }
-    },
+    // props: {
+    //   bookDetail: {
+    //     type: Object,
+    //   }
+    // },
     data() {
       return {
         scrollX: true,
@@ -87,22 +87,22 @@
         book:{id:"2"},
         bookDetail: {
           type: Object,
-          // default: function(){
-          //   return {
-          //     id:"",
-          //     name:"",
-          //     releaseTime:"",
-          //     picture:"",
-          //     tag:"",
-          //     type:"",
-          //     score:null,
-          //     evaluateNumber:null,
-          //     movieLength:"",
-          //     directors:[],
-          //     leadActors:[],
-          //     synopsis:''
-          //   }
-          // }
+          default: function(){
+            return {
+              id:"",
+              name:"",
+              author:"",
+              translator:"",
+              publisHouse:"",
+              publicationDate:"",
+              price:"",
+              score:null,
+              evaluateNumber:null,
+              picture:"",
+              descption:"",
+              tag:""
+            }
+          }
         }
       };
     },
@@ -128,7 +128,7 @@
       },
       //获取书籍标签
       tags() {
-        let year = this.bookDetail.publiationate;
+        let year = this.bookDetail.publicationDate;
         let tag = this.bookDetail.tag;
         return `${year}/${tag}`;
       },
@@ -142,7 +142,7 @@
         //   }
         //   if (date[i].indexOf('中国大陆') > -1) {
         //     pubdate = date[i];
-        //     break;
+        //     break;name
         //   }
         // }
         // if (!pubdate) {
@@ -167,11 +167,11 @@
         }
       },
       //全局变量存储想看的电影信息
-      saveWatchedMovie() {
-        //this.markWatchedMovie(this.movie);
-        this.$store.dispatch("markWatchedMovie",this.movie);
-        const index = this.$store.state.watchedMovies.findIndex((item) => {
-          return item.id === this.movie.id;
+      saveWatchedBook() {
+        //this.markWatchedBook(this.book);
+        this.$store.dispatch("markWatchedBook",this.book);
+        const index = this.$store.state.watchedBooks.findIndex((item) => {
+          return item.id === this.book.id;
         });
         if (index > -1) {
           this.hasWatched = true;
@@ -182,11 +182,11 @@
         }
       },
       //保存想看的记录
-      saveWantedMovie() {
-        //this.markWantedMovie(this.movie);
-        this.$store.dispatch("markWantedMovie",this.movie);
-        const index = this.$store.state.wantedMovies.findIndex((item) => {
-          return item.id === this.movie.id;
+      saveWantedBook() {
+        //this.markWantedBook(this.book);
+        this.$store.dispatch("markWantedBook",this.book);
+        const index = this.$store.state.wantedBooks.findIndex((item) => {
+          return item.id === this.book.id;
         });
         if (index > -1) {
           this.wantedText = '已想看';
@@ -197,8 +197,8 @@
       //判断是否已经保存了想看的意愿
       isWanted(id) {
 
-        let wantedMovies = this.$store.state.wantedMovies;
-        const index = this.$store.state.wantedMovies.findIndex((item) => {
+        let wantedBooks = this.$store.state.wantedBooks;
+        const index = this.$store.state.wantedBooks.findIndex((item) => {
           return item.id === id;
         });
         if (index > -1) {
@@ -208,7 +208,7 @@
         return false;
       },
       isWatched(id) {
-        const index = this.$store.state.watchedMovies.findIndex((item) => {
+        const index = this.$store.state.watchedBooks.findIndex((item) => {
           return item.id === id;
         });
         if (index > -1) {
@@ -218,11 +218,11 @@
         return false;
       },
       normalizeScore() { // 数位补零
-        let len = this.movieDetail.score.toString().length;
+        let len = this.bookDetail.score.toString().length;
         if (len < 2) {
-          return `${this.movieDetail.score}.0`;
+          return `${this.bookDetail.score}.0`;
         }
-        return this.movieDetail.score;
+        return this.bookDetail.score;
       },
       _initPics() {
         let picWidth = 90;
@@ -235,7 +235,7 @@
         getBook(Number.parseInt(this.$route.query.id)).then(res => {
           // res msg code
           let data = JSON.parse(res.data)
-          this.movieDetail = data;
+          this.bookDetail = data;
         });
       },
       // 解决403图片缓存问题
@@ -246,15 +246,15 @@
         }
       },
       //根据用户点击的标签重新查询对应标签下的电影
-      getMovieByTagId:function (tagId){
-        // this.movieQuery.pageNum = 1;
+      getBookByTagId:function (tagId){
+        // this.BookQuery.pageNum = 1;
         // //添加标签类型
-        // this.movieQuery.type = tagId;
+        // this.BookQuery.type = tagId;
         // //再次进行查询
-        // this.selectMovieList();
+        // this.selectBookList();
         //跳转路由并添加参数
         this.$router.push({
-          path: "/movie",
+          path: "/book",
           query: { pageNum: 1,type:tagId}
         })
       },
@@ -262,7 +262,7 @@
     components: {
       Star,
       Scroll,
-      MovieTag
+      BookTag
     },
 
   };
@@ -271,12 +271,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/variable.styl"
   @import "../../common/stylus/mixin.styl"
-  .movie-info
+  .book-info
     background-color: $color-background
     padding: 0 20px
     .overall
       display: flex
-      height: 520px
+      height: 400px
       justify-content: space-between
       .desc
         /*flex: 70% 0 0*/

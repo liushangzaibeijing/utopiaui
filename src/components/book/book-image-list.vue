@@ -11,10 +11,10 @@
         </div>
         <Row type="flex" align="middle" class="page">
           <span>第</span>
-          <Input :max="40" :min="1" :number="true" v-model="showNum" class="input-number" @on-change=" updateDataShow "></Input>
+          <Input :max="40" :min="1" :number="true" v-model="currentPage" class="input-number" @on-change=" updateDataShow "></Input>
           <span class="margin-end">/ 页</span>
-          <span class="total">总数 {{ total }}</span>
-          <Page :total="total" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
+          <span class="total">总记录 {{ total }}</span>
+          <Page :total="maxPage" :current="currentPage" :page-size="showNum" @on-change="pageChange"></Page>
         </Row>
       </Row>
     </Row>
@@ -55,9 +55,10 @@
       return {
         keyword: '', // keyword for search
         dataShow: [], // data for showing
-        showNum: 1, // number of item per page
+        showNum: 40, // number of item per page
         currentPage: 1,
         total:20,
+        maxPage:1,
         bookQuery:{
           pageNum:null,
           pageSize:null,
@@ -70,7 +71,7 @@
       updateDataShow: function () {
         this.bookQuery.pageNum = this.currentPage
         this.bookQuery.pageSize = this.showNum;
-        this.selectMovieList();
+        this.selectBookList();
       },
       pageChange: function (page) {
         console.log("当前页码数："+page)
@@ -108,8 +109,9 @@
       parseData:function(data){
         this.dataShow = JSON.parse(data.list); //update dataShow once data changed
         console.log(this.dataShow)
-        this.showNum = data.page;
-        this.total = data.total
+        //this.showNum = data.page;
+        this.total = data.total;
+        this.maxPage = data.maxPage;
         this.currentPage = data.page
 
       },
@@ -117,9 +119,9 @@
       getBookByTagId:function (tagId){
         this.bookQuery.pageNum = 1;
         //添加标签类型
-        this.bookQuery.type = tagId;
+        this.bookQuery.tag = tagId;
         //再次进行查询
-        this.selectMovieList();
+        this.selectBookList();
       }
     },
     watch: {

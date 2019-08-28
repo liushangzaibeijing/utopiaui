@@ -1,13 +1,15 @@
 <template>
   <aside class="aside-content">
-    <h2 class="content-header">电影分类</h2>
-    <ul>
+    <h1 class="content-header">书籍分类</h1>
+
+    <ul >
       <li
         v-for="(bookTag, index) in bookTags"
         :key="index"
         class="aside-item"
         :class="{'active-movie-tag': bookTag.name === currentTag.name}"
-        @click="changeBookTag(bookTags)"
+        style="float: right; padding: 9px 7px 10px 3px;"
+        @click="changeBookTag(bookTag)"
       >
         {{bookTag.name}}
       </li>

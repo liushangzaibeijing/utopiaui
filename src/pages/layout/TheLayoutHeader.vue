@@ -38,7 +38,7 @@
       </div>
 
     </div>
-
+  <!--
     <div class="right" v-if="!minScreen">
       <div class="right-item">
         <i class="fa fa-envelope-o fa-fw"></i>
@@ -80,11 +80,13 @@
         </el-dropdown>
       </div>
     </div>
+
     <div v-if="minScreen" class="right">
       <el-dropdown trigger="click" :hide-on-click="false">
         <p class="user-info">
           <i class="fa fa-user-o"></i>
         </p>
+
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
             {{ user_name }}
@@ -115,6 +117,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+  -->
   </el-header>
 </template>
 
