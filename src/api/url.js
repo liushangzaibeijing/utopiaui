@@ -7,5 +7,12 @@ export default {
   //获取单个页面详情
   getMovie:base + '/movie/movieDetail',
   //获取所有的电影标签
-  selectMovieTags:base + '/tag/selectMovieTags'
+  selectMovieTags:base + '/tag/selectMovieTags',
+  //获取书籍信息列表
+  getBookList:base + '/book/bookListPage',
+  //获取书籍详情信息
+  getBook:base + '/book/bookDetail',
+  //获取书籍标签页
+  selectBookTags:base + '/tag/selectBookTags',
+
 }

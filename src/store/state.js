@@ -1,4 +1,4 @@
-import { loadSearch, loadComment, loadWatchedMovie, loadWantedMovie, loadCelebrity } from '../common/js/cache';
+import { loadSearch, loadComment, loadWatchedMovie, loadWantedMovie, loadCelebrity,loadWatchedBooks, loadWantedBooks} from '../common/js/cache';
 const state = {
   movie: {}, // 当前电影信息
   currentCelebrityId: 0,
@@ -8,7 +8,9 @@ const state = {
   watchedMovies: loadWatchedMovie(), // 看过的电影
   wantedMovies: loadWantedMovie(), // 想看的电影
   collectedCelebrities: loadCelebrity(), // 收藏的影人
-  favoriteComments: loadComment() // 点赞的评论
+  favoriteComments: loadComment() ,// 点赞的评论
+  watchedBooks: loadWatchedBooks(), // 看过的书籍
+  wantedBooks: loadWantedBooks(), // 想看的书籍
 };
 
 export default state;
